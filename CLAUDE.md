@@ -46,3 +46,13 @@ All persistence is via `localStorage` (no external database for user data):
 ### Tech Stack
 
 Next.js 16 + React 19, TypeScript 5 (strict mode), Tailwind CSS 4, ESLint 9 (flat config), Google Gemini AI (`@google/genai`), Lucide React icons.
+
+## Coding Standards
+
+- **SUPABASE_NO_ID_IN_INSERT**: Never include an `id` field in Supabase insert payloads. Always let the database generate UUIDs automatically via the `gen_random_uuid()` column default.
+
+- **NULL_SAFETY**: Always use null checks and optional chaining (`?.`, `?? fallback`) when reading data from an API or database. Assume any field could be `undefined` or `null` — never access nested properties without guarding.
+
+- **API_DATA_SHAPE**: When connecting the UI to a new API endpoint, handle both the old data shape (e.g. localStorage) and the new shape (API response) gracefully. Map API column names back to the shape the UI expects before setting state.
+
+- **RLS_ALL_OPERATIONS**: When creating Supabase RLS policies they must cover ALL operations (`SELECT`, `INSERT`, `UPDATE`, `DELETE`) unless there is a deliberate and documented reason to restrict a specific operation.
