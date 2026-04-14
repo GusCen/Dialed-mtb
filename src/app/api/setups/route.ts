@@ -50,7 +50,7 @@ export async function POST(request: NextRequest) {
       ? JSON.parse(calculatedSettingsRaw)
       : calculatedSettingsRaw;
 
-  const payload = {
+  const insertData = {
     id: setup.id,
     user_id: userId,
     name: setup.name,
@@ -64,16 +64,17 @@ export async function POST(request: NextRequest) {
     notes: setup.feedback ?? null,
   };
 
-  console.log('[POST /api/setups] Supabase insert payload:', JSON.stringify(payload, null, 2));
+  console.log('Payload:', JSON.stringify(insertData));
 
   const { data, error } = await supabase
     .from('setups')
-    .insert(payload)
+    .insert(insertData)
     .select()
     .single();
 
   if (error) {
-    return NextResponse.json({ error: error.message }, { status: 500 });
+    console.log('Supabase error:', JSON.stringify(error));
+    return NextResponse.json({ error: error.message, code: error.code, details: error.details, hint: error.hint }, { status: 500 });
   }
 
   return NextResponse.json(data, { status: 201 });
