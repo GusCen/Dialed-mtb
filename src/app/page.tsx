@@ -87,39 +87,32 @@ export default function App() {
     terrain: 'Mixed'
   });
 
+  // Load theme and preferences from localStorage.
   useEffect(() => {
     const theme = localStorage.getItem('mtb-theme');
     if (theme) setIsDarkMode(theme === 'dark');
     const prefs = localStorage.getItem('mtb-preferences');
     if (prefs) setUserPreferences(JSON.parse(prefs));
-    const localSetups = localStorage.getItem('mtb-saved-setups');
-    if (localSetups) setSavedSetups(JSON.parse(localSetups));
   }, []);
 
+  // Load setups from the API; fall back to localStorage if the request fails.
   useEffect(() => {
-    if (isAuthenticated && user) {
-      fetch(`/api/setups/${user.id}`)
-        .then(res => res.json())
-        .then(data => {
-          const localSetups = JSON.parse(localStorage.getItem('mtb-saved-setups') || '[]');
-          const merged = [...data];
-          localSetups.forEach((ls: SavedSetup) => {
-            if (!merged.find((ms: SavedSetup) => ms.id === ls.id)) {
-              fetch('/api/setups', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ ...ls, userId: user.id })
-              });
-              merged.push(ls);
-            }
-          });
-          setSavedSetups(merged);
-        })
-        .catch(err => console.error('Failed to fetch setups', err));
-    }
-  }, [isAuthenticated, user]);
+    const loadSetups = async () => {
+      try {
+        const res = await fetch('/api/setups?userId=guest');
+        if (!res.ok) throw new Error(`${res.status}`);
+        const data: SavedSetup[] = await res.json();
+        setSavedSetups(data);
+        localStorage.setItem('mtb-saved-setups', JSON.stringify(data));
+      } catch {
+        const local = localStorage.getItem('mtb-saved-setups');
+        if (local) setSavedSetups(JSON.parse(local));
+      }
+    };
+    loadSetups();
+  }, []);
 
-  const saveSetupsToStorage = (setups: SavedSetup[]) => {
+  const saveSetupsLocally = (setups: SavedSetup[]) => {
     setSavedSetups(setups);
     localStorage.setItem('mtb-saved-setups', JSON.stringify(setups));
   };
@@ -142,30 +135,28 @@ export default function App() {
       date: new Date().toISOString(),
       formData: { ...formData },
     };
+    // Optimistic update — localStorage is the fallback if the API call fails.
     const updatedSetups = [newSetup, ...savedSetups];
-    saveSetupsToStorage(updatedSetups);
-    if (isAuthenticated && user) {
-      try {
-        await fetch('/api/setups', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ ...newSetup, userId: user.id })
-        });
-      } catch (e) {
-        console.error('Failed to save to server', e);
-      }
+    saveSetupsLocally(updatedSetups);
+    try {
+      await fetch('/api/setups', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ ...newSetup, userId: 'guest' }),
+      });
+    } catch {
+      console.error('Failed to save setup to API; stored locally as fallback');
     }
   };
 
   const handleDeleteSetup = async (id: string) => {
     const updatedSetups = savedSetups.filter(s => s.id !== id);
-    saveSetupsToStorage(updatedSetups);
-    if (isAuthenticated) {
-      try {
-        await fetch(`/api/setups/${id}`, { method: 'DELETE' });
-      } catch (e) {
-        console.error('Failed to delete from server', e);
-      }
+    saveSetupsLocally(updatedSetups);
+    try {
+      const res = await fetch(`/api/setups?id=${id}`, { method: 'DELETE' });
+      if (!res.ok) throw new Error(`${res.status}`);
+    } catch {
+      console.error('Failed to delete setup from API; removed locally as fallback');
     }
   };
 
@@ -173,17 +164,16 @@ export default function App() {
     const updatedSetups = savedSetups.map(s =>
       s.id === id ? { ...s, rating, feedback } : s
     );
-    saveSetupsToStorage(updatedSetups);
-    if (isAuthenticated) {
-      try {
-        await fetch(`/api/setups/${id}`, {
-          method: 'PUT',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ rating, feedback })
-        });
-      } catch (e) {
-        console.error('Failed to update rating on server', e);
-      }
+    saveSetupsLocally(updatedSetups);
+    try {
+      const res = await fetch(`/api/setups?id=${id}`, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ rating, feedback }),
+      });
+      if (!res.ok) throw new Error(`${res.status}`);
+    } catch {
+      console.error('Failed to update rating on API; updated locally as fallback');
     }
     let newPrefs = { ...userPreferences };
     if (feedback === 'Too Soft')  newPrefs.pressureModifier += 0.03;
