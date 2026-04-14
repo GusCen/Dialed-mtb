@@ -35,21 +35,40 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({ error: 'userId and setup id are required' }, { status: 400 });
   }
 
+  const riderWeightRaw = setup.formData?.weight;
+  const riderWeight = riderWeightRaw != null && riderWeightRaw !== ''
+    ? Number(riderWeightRaw)
+    : null;
+
+  const ratingRaw = setup.rating;
+  const rating = ratingRaw != null ? Number(ratingRaw) : null;
+
+  // Guard against calculated_settings arriving as a JSON string instead of an object.
+  const calculatedSettingsRaw = setup.formData ?? null;
+  const calculatedSettings =
+    typeof calculatedSettingsRaw === 'string'
+      ? JSON.parse(calculatedSettingsRaw)
+      : calculatedSettingsRaw;
+
+  const payload = {
+    id: setup.id,
+    user_id: userId,
+    name: setup.name,
+    bike_id: setup.formData?.bikeModel ?? null,
+    fork_variant_id: setup.formData?.frontSuspension ?? null,
+    shock_variant_id: setup.formData?.rearShock ?? null,
+    rider_weight: Number.isNaN(riderWeight) ? null : riderWeight,
+    ride_style: setup.formData?.rideType ?? null,
+    calculated_settings: calculatedSettings,
+    rating: Number.isNaN(rating) ? null : rating,
+    notes: setup.feedback ?? null,
+  };
+
+  console.log('[POST /api/setups] Supabase insert payload:', JSON.stringify(payload, null, 2));
+
   const { data, error } = await supabase
     .from('setups')
-    .insert({
-      id: setup.id,
-      user_id: userId,
-      name: setup.name,
-      bike_id: setup.formData?.bikeModel ?? null,
-      fork_variant_id: setup.formData?.frontSuspension ?? null,
-      shock_variant_id: setup.formData?.rearShock ?? null,
-      rider_weight: setup.formData?.weight ? Number(setup.formData.weight) : null,
-      ride_style: setup.formData?.rideType ?? null,
-      calculated_settings: setup.formData ?? null,
-      rating: setup.rating ?? null,
-      notes: setup.feedback ?? null,
-    })
+    .insert(payload)
     .select()
     .single();
 
