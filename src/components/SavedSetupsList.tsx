@@ -37,8 +37,8 @@ export const SavedSetupsList: React.FC<Props> = ({ setups, onLoad, onDelete, onR
               <div>
                 <h3 className={`font-bold text-[17px] ${textPrimary} mb-1`}>{setup.name}</h3>
                 <div className="flex items-center gap-2">
-                   <span className={`text-[13px] font-medium px-2 py-0.5 rounded-md ${isDarkMode ? 'bg-zinc-800 text-zinc-400' : 'bg-gray-100 text-gray-500'}`}>{setup.formData.rideType}</span>
-                   <span className={`text-[13px] ${textSecondary}`}>{setup.formData.bikeModel}</span>
+                   <span className={`text-[13px] font-medium px-2 py-0.5 rounded-md ${isDarkMode ? 'bg-zinc-800 text-zinc-400' : 'bg-gray-100 text-gray-500'}`}>{setup.formData?.rideType}</span>
+                   <span className={`text-[13px] ${textSecondary}`}>{setup.formData?.bikeModel}</span>
                 </div>
               </div>
               <button 

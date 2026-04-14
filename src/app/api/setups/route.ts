@@ -21,7 +21,24 @@ export async function GET(request: NextRequest) {
     return NextResponse.json({ error: error.message }, { status: 500 });
   }
 
-  return NextResponse.json(data ?? []);
+  // Map Supabase column names back to the SavedSetup shape the UI expects.
+  const setups: SavedSetup[] = (data ?? []).map((row) => {
+    const formData =
+      typeof row.calculated_settings === 'string'
+        ? JSON.parse(row.calculated_settings)
+        : (row.calculated_settings ?? {});
+
+    return {
+      id: row.id,
+      name: row.name,
+      date: row.created_at ?? new Date().toISOString(),
+      formData,
+      rating: row.rating ?? undefined,
+      feedback: row.notes ?? undefined,
+    };
+  });
+
+  return NextResponse.json(setups);
 }
 
 // POST /api/setups
