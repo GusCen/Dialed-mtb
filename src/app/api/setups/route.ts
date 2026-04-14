@@ -51,7 +51,6 @@ export async function POST(request: NextRequest) {
       : calculatedSettingsRaw;
 
   const insertData = {
-    id: setup.id,
     user_id: userId,
     name: setup.name,
     bike_id: setup.formData?.bikeModel ?? null,
