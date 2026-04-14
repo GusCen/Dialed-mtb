@@ -2,6 +2,10 @@
 
 This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
 
+## General Instructions
+
+- **ALWAYS_CREATE_BRANCH**: Before making any file edits, ask to create a new git branch named `ai/task-description` unless already on a feature branch.
+
 ## Commands
 
 ```bash
