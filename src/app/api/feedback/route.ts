@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
+import { supabase } from '@/lib/supabase';
 
 interface FeedbackPayload {
   message: string;
@@ -9,7 +10,6 @@ interface FeedbackPayload {
 // POST /api/feedback
 // Body: { message: string; rating: number; userId?: string }
 // Submits user feedback.
-// TODO (Phase 3): insert into Supabase.
 export async function POST(request: NextRequest) {
   const body: FeedbackPayload = await request.json();
   const { message, rating, userId } = body;
@@ -18,6 +18,19 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({ error: 'rating must be a number between 1 and 5' }, { status: 400 });
   }
 
-  // Placeholder — replace with Supabase insert in Phase 3.
-  return NextResponse.json({ success: true, message, rating, userId }, { status: 201 });
+  const { data, error } = await supabase
+    .from('feedback')
+    .insert({
+      user_id: userId ?? null,
+      message,
+      rating,
+    })
+    .select()
+    .single();
+
+  if (error) {
+    return NextResponse.json({ error: error.message }, { status: 500 });
+  }
+
+  return NextResponse.json(data, { status: 201 });
 }
