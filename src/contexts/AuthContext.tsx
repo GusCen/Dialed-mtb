@@ -40,13 +40,11 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    supabase.auth.getSession().then(({ data: { session } }) => {
-      setUser(session?.user ? mapSupabaseUser(session.user) : null);
-      setIsLoading(false);
-    });
-
+    // onAuthStateChange fires INITIAL_SESSION on subscribe with the stored session.
+    // Using it as the single source of truth avoids a race with getSession().
     const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
       setUser(session?.user ? mapSupabaseUser(session.user) : null);
+      setIsLoading(false);
     });
 
     return () => subscription.unsubscribe();
