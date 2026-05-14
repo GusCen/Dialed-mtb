@@ -129,21 +129,28 @@ export default function App() {
   };
 
   const handleSaveSetup = async (name: string) => {
-    const newSetup: SavedSetup = {
+    const optimisticSetup: SavedSetup = {
       id: Date.now().toString(),
       name,
       date: new Date().toISOString(),
       formData: { ...formData },
     };
-    // Optimistic update — localStorage is the fallback if the API call fails.
-    const updatedSetups = [newSetup, ...savedSetups];
-    saveSetupsLocally(updatedSetups);
+    // Optimistic update so the UI responds immediately.
+    const optimisticList = [optimisticSetup, ...savedSetups];
+    saveSetupsLocally(optimisticList);
     try {
-      await fetch('/api/setups', {
+      const res = await fetch('/api/setups', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ ...newSetup, userId: 'guest' }),
+        body: JSON.stringify({ ...optimisticSetup, userId: 'guest' }),
       });
+      if (!res.ok) throw new Error(`${res.status}`);
+      // Replace the optimistic entry (timestamp id) with the real row (UUID) from Supabase.
+      const saved: SavedSetup = await res.json();
+      const confirmedList = optimisticList.map(s =>
+        s.id === optimisticSetup.id ? saved : s
+      );
+      saveSetupsLocally(confirmedList);
     } catch {
       console.error('Failed to save setup to API; stored locally as fallback');
     }

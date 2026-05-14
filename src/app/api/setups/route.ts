@@ -2,6 +2,24 @@ import { NextRequest, NextResponse } from 'next/server';
 import { SavedSetup } from '@/types';
 import { supabase } from '@/lib/supabase';
 
+// Maps a raw Supabase row to the SavedSetup shape the UI expects.
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+function rowToSavedSetup(row: Record<string, any>): SavedSetup {
+  const formData =
+    typeof row.calculated_settings === 'string'
+      ? JSON.parse(row.calculated_settings)
+      : (row.calculated_settings ?? {});
+
+  return {
+    id: row.id,
+    name: row.name,
+    date: row.created_at ?? new Date().toISOString(),
+    formData,
+    rating: row.rating ?? undefined,
+    feedback: row.notes ?? undefined,
+  };
+}
+
 // GET /api/setups?userId=<userId>
 // Returns all setups for a user.
 export async function GET(request: NextRequest) {
@@ -21,24 +39,7 @@ export async function GET(request: NextRequest) {
     return NextResponse.json({ error: error.message }, { status: 500 });
   }
 
-  // Map Supabase column names back to the SavedSetup shape the UI expects.
-  const setups: SavedSetup[] = (data ?? []).map((row) => {
-    const formData =
-      typeof row.calculated_settings === 'string'
-        ? JSON.parse(row.calculated_settings)
-        : (row.calculated_settings ?? {});
-
-    return {
-      id: row.id,
-      name: row.name,
-      date: row.created_at ?? new Date().toISOString(),
-      formData,
-      rating: row.rating ?? undefined,
-      feedback: row.notes ?? undefined,
-    };
-  });
-
-  return NextResponse.json(setups);
+  return NextResponse.json((data ?? []).map(rowToSavedSetup));
 }
 
 // POST /api/setups
@@ -93,7 +94,7 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({ error: error.message, code: error.code, details: error.details, hint: error.hint }, { status: 500 });
   }
 
-  return NextResponse.json(data, { status: 201 });
+  return NextResponse.json(rowToSavedSetup(data), { status: 201 });
 }
 
 // PUT /api/setups?id=<id>
