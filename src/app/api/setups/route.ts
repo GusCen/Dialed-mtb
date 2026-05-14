@@ -49,8 +49,8 @@ export async function POST(request: NextRequest) {
   const body: SavedSetup & { userId: string } = await request.json();
   const { userId, ...setup } = body;
 
-  if (!userId || !setup.id) {
-    return NextResponse.json({ error: 'userId and setup id are required' }, { status: 400 });
+  if (!userId) {
+    return NextResponse.json({ error: 'userId is required' }, { status: 400 });
   }
 
   const riderWeightRaw = setup.formData?.weight;
@@ -97,15 +97,16 @@ export async function POST(request: NextRequest) {
   return NextResponse.json(rowToSavedSetup(data), { status: 201 });
 }
 
-// PUT /api/setups?id=<id>
+// PUT /api/setups?id=<id>&userId=<userId>
 // Body: Partial<Pick<SavedSetup, 'rating' | 'feedback'>>
-// Updates rating/feedback for an existing setup.
+// Updates rating/feedback for a setup the user owns.
 export async function PUT(request: NextRequest) {
   const { searchParams } = request.nextUrl;
   const id = searchParams.get('id');
+  const userId = searchParams.get('userId');
 
-  if (!id) {
-    return NextResponse.json({ error: 'id query param is required' }, { status: 400 });
+  if (!id || !userId) {
+    return NextResponse.json({ error: 'id and userId query params are required' }, { status: 400 });
   }
 
   const body: Partial<Pick<SavedSetup, 'rating' | 'feedback'>> = await request.json();
@@ -118,6 +119,7 @@ export async function PUT(request: NextRequest) {
     .from('setups')
     .update(updates)
     .eq('id', id)
+    .eq('user_id', userId)
     .select()
     .single();
 
@@ -128,20 +130,22 @@ export async function PUT(request: NextRequest) {
   return NextResponse.json(data);
 }
 
-// DELETE /api/setups?id=<id>
-// Deletes a setup by id.
+// DELETE /api/setups?id=<id>&userId=<userId>
+// Deletes a setup the user owns.
 export async function DELETE(request: NextRequest) {
   const { searchParams } = request.nextUrl;
   const id = searchParams.get('id');
+  const userId = searchParams.get('userId');
 
-  if (!id) {
-    return NextResponse.json({ error: 'id query param is required' }, { status: 400 });
+  if (!id || !userId) {
+    return NextResponse.json({ error: 'id and userId query params are required' }, { status: 400 });
   }
 
   const { error } = await supabase
     .from('setups')
     .delete()
-    .eq('id', id);
+    .eq('id', id)
+    .eq('user_id', userId);
 
   if (error) {
     return NextResponse.json({ error: error.message }, { status: 500 });

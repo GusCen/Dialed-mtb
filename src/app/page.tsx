@@ -68,7 +68,7 @@ export default function App() {
   const [showLoginModal, setShowLoginModal] = useState(false);
   const [showFeedbackModal, setShowFeedbackModal] = useState(false);
 
-  const { user, logout, isAuthenticated } = useAuth();
+  const { user, logout, isAuthenticated, isLoading } = useAuth();
 
   const [savedSetups, setSavedSetups] = useState<SavedSetup[]>([]);
   const [userPreferences, setUserPreferences] = useState<UserPreferences>({
@@ -96,7 +96,9 @@ export default function App() {
   }, []);
 
   // Load setups from the API; fall back to localStorage if the request fails.
+  // Wait until the auth session is resolved to avoid a guest fetch followed by a user fetch.
   useEffect(() => {
+    if (isLoading) return;
     const loadSetups = async () => {
       try {
         const res = await fetch(`/api/setups?userId=${user?.id ?? 'guest'}`);
@@ -110,7 +112,7 @@ export default function App() {
       }
     };
     loadSetups();
-  }, [user?.id]);
+  }, [user?.id, isLoading]);
 
   const saveSetupsLocally = (setups: SavedSetup[]) => {
     setSavedSetups(setups);
@@ -160,7 +162,7 @@ export default function App() {
     const updatedSetups = savedSetups.filter(s => s.id !== id);
     saveSetupsLocally(updatedSetups);
     try {
-      const res = await fetch(`/api/setups?id=${id}`, { method: 'DELETE' });
+      const res = await fetch(`/api/setups?id=${id}&userId=${user?.id ?? 'guest'}`, { method: 'DELETE' });
       if (!res.ok) throw new Error(`${res.status}`);
     } catch {
       console.error('Failed to delete setup from API; removed locally as fallback');
@@ -173,7 +175,7 @@ export default function App() {
     );
     saveSetupsLocally(updatedSetups);
     try {
-      const res = await fetch(`/api/setups?id=${id}`, {
+      const res = await fetch(`/api/setups?id=${id}&userId=${user?.id ?? 'guest'}`, {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ rating, feedback }),
