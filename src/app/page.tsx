@@ -99,7 +99,7 @@ export default function App() {
   useEffect(() => {
     const loadSetups = async () => {
       try {
-        const res = await fetch('/api/setups?userId=guest');
+        const res = await fetch(`/api/setups?userId=${user?.id ?? 'guest'}`);
         if (!res.ok) throw new Error(`${res.status}`);
         const data: SavedSetup[] = await res.json();
         setSavedSetups(data);
@@ -110,7 +110,7 @@ export default function App() {
       }
     };
     loadSetups();
-  }, []);
+  }, [user?.id]);
 
   const saveSetupsLocally = (setups: SavedSetup[]) => {
     setSavedSetups(setups);
@@ -142,7 +142,7 @@ export default function App() {
       const res = await fetch('/api/setups', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ ...optimisticSetup, userId: 'guest' }),
+        body: JSON.stringify({ ...optimisticSetup, userId: user?.id ?? 'guest' }),
       });
       if (!res.ok) throw new Error(`${res.status}`);
       // Replace the optimistic entry (timestamp id) with the real row (UUID) from Supabase.
