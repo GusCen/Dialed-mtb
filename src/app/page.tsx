@@ -87,12 +87,10 @@ export default function App() {
     terrain: 'Mixed'
   });
 
-  // Load theme and preferences from localStorage.
+  // Load theme from localStorage (device-local).
   useEffect(() => {
     const theme = localStorage.getItem('mtb-theme');
     if (theme) setIsDarkMode(theme === 'dark');
-    const prefs = localStorage.getItem('mtb-preferences');
-    if (prefs) setUserPreferences(JSON.parse(prefs));
   }, []);
 
   // Load setups from the API; fall back to localStorage if the request fails.
@@ -112,6 +110,33 @@ export default function App() {
       }
     };
     loadSetups();
+  }, [user?.id, isLoading]);
+
+  // Load preferences from the API; fall back to localStorage cache, then defaults.
+  useEffect(() => {
+    if (isLoading) return;
+    const loadPreferences = async () => {
+      try {
+        const res = await fetch(`/api/preferences?userId=${user?.id ?? 'guest'}`);
+        if (!res.ok) throw new Error(`${res.status}`);
+        const data: UserPreferences | null = await res.json();
+        if (data) {
+          const prefs: UserPreferences = {
+            pressureModifier: data.pressureModifier ?? 1.0,
+            reboundModifier: data.reboundModifier ?? 0,
+          };
+          setUserPreferences(prefs);
+          localStorage.setItem('mtb-preferences', JSON.stringify(prefs));
+          return;
+        }
+        const local = localStorage.getItem('mtb-preferences');
+        if (local) setUserPreferences(JSON.parse(local));
+      } catch {
+        const local = localStorage.getItem('mtb-preferences');
+        if (local) setUserPreferences(JSON.parse(local));
+      }
+    };
+    loadPreferences();
   }, [user?.id, isLoading]);
 
   const saveSetupsLocally = (setups: SavedSetup[]) => {
@@ -184,13 +209,23 @@ export default function App() {
     } catch {
       console.error('Failed to update rating on API; updated locally as fallback');
     }
-    let newPrefs = { ...userPreferences };
+    const newPrefs = { ...userPreferences };
     if (feedback === 'Too Soft')  newPrefs.pressureModifier += 0.03;
     else if (feedback === 'Too Hard')  newPrefs.pressureModifier -= 0.03;
     else if (feedback === 'Too Fast')  newPrefs.reboundModifier -= 1;
     else if (feedback === 'Too Slow')  newPrefs.reboundModifier += 1;
     newPrefs.pressureModifier = Math.max(0.8, Math.min(1.3, newPrefs.pressureModifier));
     savePreferences(newPrefs);
+    try {
+      const prefsRes = await fetch('/api/preferences', {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ userId: user?.id ?? 'guest', ...newPrefs }),
+      });
+      if (!prefsRes.ok) throw new Error(`${prefsRes.status}`);
+    } catch {
+      console.error('Failed to persist preferences to API; cached locally as fallback');
+    }
   };
 
   const handleLoadSetup = (setup: SavedSetup) => {
