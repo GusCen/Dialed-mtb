@@ -1,9 +1,27 @@
 import { ImageResponse } from 'next/og';
 
-export const size = { width: 32, height: 32 };
 export const contentType = 'image/png';
 
-export default function Icon() {
+const SIZES = {
+  small: 32,
+  medium: 192,
+  large: 512,
+} as const;
+
+type IconId = keyof typeof SIZES;
+
+export function generateImageMetadata() {
+  return (Object.keys(SIZES) as IconId[]).map((id) => ({
+    id,
+    contentType,
+    size: { width: SIZES[id], height: SIZES[id] },
+  }));
+}
+
+export default function Icon({ id }: { id: IconId }) {
+  const size = SIZES[id];
+  const isSmall = id === 'small';
+
   return new ImageResponse(
     (
       <div
@@ -15,14 +33,14 @@ export default function Icon() {
           justifyContent: 'center',
           background: 'linear-gradient(135deg, #f97316 0%, #dc2626 100%)',
           color: 'white',
-          fontSize: 22,
+          fontSize: Math.round(size * 0.7),
           fontWeight: 800,
-          borderRadius: 6,
+          ...(isSmall ? { borderRadius: 6 } : {}),
         }}
       >
         D
       </div>
     ),
-    { ...size },
+    { width: size, height: size },
   );
 }
