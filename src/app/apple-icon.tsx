@@ -4,6 +4,8 @@ export const size = { width: 180, height: 180 };
 export const contentType = 'image/png';
 
 export default function AppleIcon() {
+  const mountainSize = Math.round(size.width * 0.6);
+
   return new ImageResponse(
     (
       <div
@@ -14,12 +16,20 @@ export default function AppleIcon() {
           alignItems: 'center',
           justifyContent: 'center',
           background: 'linear-gradient(135deg, #f97316 0%, #dc2626 100%)',
-          color: 'white',
-          fontSize: 128,
-          fontWeight: 800,
         }}
       >
-        D
+        <svg
+          width={mountainSize}
+          height={mountainSize}
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="white"
+          strokeWidth={2.5}
+          strokeLinecap="round"
+          strokeLinejoin="round"
+        >
+          <path d="m8 3 4 8 5-5 5 15H2L8 3z" />
+        </svg>
       </div>
     ),
     { ...size },
