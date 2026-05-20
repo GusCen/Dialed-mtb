@@ -21,6 +21,7 @@ export function generateImageMetadata() {
 export default function Icon({ id }: { id: IconId }) {
   const size = SIZES[id];
   const isSmall = id === 'small';
+  const mountainSize = Math.round(size * 0.6);
 
   return new ImageResponse(
     (
@@ -32,13 +33,21 @@ export default function Icon({ id }: { id: IconId }) {
           alignItems: 'center',
           justifyContent: 'center',
           background: 'linear-gradient(135deg, #f97316 0%, #dc2626 100%)',
-          color: 'white',
-          fontSize: Math.round(size * 0.7),
-          fontWeight: 800,
           ...(isSmall ? { borderRadius: 6 } : {}),
         }}
       >
-        D
+        <svg
+          width={mountainSize}
+          height={mountainSize}
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="white"
+          strokeWidth={2.5}
+          strokeLinecap="round"
+          strokeLinejoin="round"
+        >
+          <path d="m8 3 4 8 5-5 5 15H2L8 3z" />
+        </svg>
       </div>
     ),
     { width: size, height: size },
