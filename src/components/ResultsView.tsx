@@ -60,7 +60,7 @@ export const ResultsView: React.FC<Props> = ({
   const shockData = suspensionDatabase.shocks[formData.rearShock];
 
   // UI Helpers
-  const cardClass = `rounded-3xl p-6 mb-4 ${isDarkMode ? 'bg-zinc-900 border border-zinc-800/50' : 'bg-white border border-gray-100 shadow-lg shadow-gray-200/50'}`;
+  const cardClass = `rounded-3xl p-6 mb-4 ${isDarkMode ? 'bg-surface border border-border-strong/50' : 'bg-white border border-gray-100 shadow-lg shadow-gray-200/50'}`;
   const textPrimary = isDarkMode ? 'text-white' : 'text-gray-900';
   const textSecondary = isDarkMode ? 'text-zinc-400' : 'text-gray-500';
 
@@ -70,7 +70,7 @@ export const ResultsView: React.FC<Props> = ({
     const isAir = key.includes('Air') || key.includes('Spring');
 
     let accentColor = isDarkMode ? 'text-zinc-300' : 'text-zinc-700';
-    let labelColor = isDarkMode ? 'bg-zinc-800' : 'bg-gray-100';
+    let labelColor = isDarkMode ? 'bg-surface-2' : 'bg-gray-100';
 
     if (isRebound) {
       accentColor = 'text-red-500';
@@ -79,8 +79,8 @@ export const ResultsView: React.FC<Props> = ({
       accentColor = 'text-blue-500';
       labelColor = isDarkMode ? 'bg-blue-500/10 text-blue-400' : 'bg-blue-50 text-blue-600';
     } else if (isAir) {
-      accentColor = 'text-orange-500';
-      labelColor = isDarkMode ? 'bg-orange-500/10 text-orange-400' : 'bg-orange-50 text-orange-600';
+      accentColor = 'text-brand';
+      labelColor = isDarkMode ? 'bg-brand/10 text-brand' : 'bg-brand/10 text-brand';
     }
 
     let displayValue = value;
@@ -92,7 +92,7 @@ export const ResultsView: React.FC<Props> = ({
     }
 
     return (
-      <div key={key} className={`rounded-2xl p-4 flex flex-col justify-between h-full relative overflow-hidden ${isDarkMode ? 'bg-zinc-800/40' : 'bg-gray-50 border border-gray-100'}`}>
+      <div key={key} className={`rounded-2xl p-4 flex flex-col justify-between h-full relative overflow-hidden ${isDarkMode ? 'bg-surface-2/40' : 'bg-gray-50 border border-gray-100'}`}>
         <div className="flex justify-between items-start mb-2">
            <span className={`text-[10px] font-bold uppercase tracking-wider px-2 py-1 rounded-md ${labelColor}`}>
              {key.replace('Low-Speed', 'LSC').replace('High-Speed', 'HSC').replace('Rebound', 'Reb').replace('Compression', 'Comp')}
@@ -101,7 +101,7 @@ export const ResultsView: React.FC<Props> = ({
         </div>
         
         <div className="my-2">
-          <div className={`text-2xl font-bold tracking-tight ${accentColor}`}>
+          <div className={`text-2xl font-bold font-display tabular-nums tracking-tight ${accentColor}`}>
             {displayValue}
           </div>
           {subText && <div className={`text-[11px] font-medium opacity-80 ${isRebound ? 'text-red-500' : isCompression ? 'text-blue-500' : textSecondary}`}>{subText}</div>}
@@ -133,7 +133,7 @@ export const ResultsView: React.FC<Props> = ({
              className={`p-2.5 rounded-full active:scale-95 transition-all duration-300 ${
                isSaved 
                  ? 'bg-green-500 text-white shadow-lg shadow-green-500/20' 
-                 : isDarkMode ? 'bg-zinc-800 text-orange-400' : 'bg-orange-50 text-orange-600'
+                 : isDarkMode ? 'bg-surface-2 text-brand' : 'bg-brand/10 text-brand'
              }`}
           >
             <Bookmark className={`w-5 h-5 ${isSaved ? 'fill-current' : ''}`} />
@@ -143,7 +143,7 @@ export const ResultsView: React.FC<Props> = ({
 
       {showSaveDialog && (
          <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 backdrop-blur-md p-6 animate-in fade-in duration-200">
-            <div className={`w-full max-w-sm p-6 rounded-[32px] ${isDarkMode ? 'bg-zinc-900 border border-zinc-800' : 'bg-white shadow-2xl'} transform transition-all`}>
+            <div className={`w-full max-w-sm p-6 rounded-[32px] ${isDarkMode ? 'bg-surface border border-border-strong' : 'bg-white shadow-2xl'} transform transition-all`}>
                <h3 className={`text-xl font-bold mb-1 ${textPrimary}`}>Name your setup</h3>
                <p className={`text-sm ${textSecondary} mb-5`}>Save this configuration for later.</p>
                
@@ -151,12 +151,12 @@ export const ResultsView: React.FC<Props> = ({
                   type="text" 
                   value={setupName}
                   onChange={(e) => setSetupName(e.target.value)}
-                  className={`w-full p-4 rounded-2xl mb-4 text-[17px] ${isDarkMode ? 'bg-zinc-800 text-white placeholder-zinc-500' : 'bg-gray-100 text-gray-900 placeholder-gray-400'} outline-none focus:ring-2 focus:ring-orange-500/50 transition-all`}
+                  className={`w-full p-4 rounded-2xl mb-4 text-[17px] ${isDarkMode ? 'bg-surface-2 text-white placeholder-zinc-500' : 'bg-gray-100 text-gray-900 placeholder-gray-400'} outline-none focus:ring-2 focus:ring-brand/50 transition-all`}
                   autoFocus
                />
                <div className="flex gap-3">
-                  <button onClick={() => setShowSaveDialog(false)} className={`flex-1 py-3.5 rounded-2xl font-semibold text-[15px] ${isDarkMode ? 'bg-zinc-800 text-zinc-300' : 'bg-gray-100 text-gray-600'}`}>Cancel</button>
-                  <button onClick={() => { onSave(setupName); setShowSaveDialog(false); }} className="flex-1 py-3.5 rounded-2xl font-semibold text-[15px] bg-orange-500 text-white shadow-lg">Save</button>
+                  <button onClick={() => setShowSaveDialog(false)} className={`flex-1 py-3.5 rounded-2xl font-semibold text-[15px] ${isDarkMode ? 'bg-surface-2 text-zinc-300' : 'bg-gray-100 text-gray-600'}`}>Cancel</button>
+                  <button onClick={() => { onSave(setupName); setShowSaveDialog(false); }} className="flex-1 py-3.5 rounded-2xl font-semibold text-[15px] bg-brand text-white shadow-lg">Save</button>
                </div>
             </div>
          </div>
@@ -167,7 +167,7 @@ export const ResultsView: React.FC<Props> = ({
           <div className="flex justify-between items-start">
              <div>
                <h2 className={`text-3xl font-bold mb-1 ${textPrimary} tracking-tight`}>Your setup</h2>
-               <p className={`text-[15px] ${textSecondary} mb-8`}>Optimized for <span className="font-medium text-orange-500">{formData.rideType}</span></p>
+               <p className={`text-[15px] ${textSecondary} mb-8`}>Optimized for <span className="font-medium text-brand">{formData.rideType}</span></p>
              </div>
              {isEBike && (
                 <div className={`px-3 py-1 rounded-full text-xs font-bold flex items-center gap-1 ${isDarkMode ? 'bg-yellow-500/20 text-yellow-400' : 'bg-yellow-100 text-yellow-600'}`}>
@@ -179,7 +179,7 @@ export const ResultsView: React.FC<Props> = ({
           <div className="flex gap-12">
             <div>
               <p className={`text-[11px] font-semibold uppercase tracking-wider mb-0.5 ${isDarkMode ? 'text-zinc-500' : 'text-gray-400'}`}>Target Sag</p>
-              <p className={`text-2xl font-semibold text-orange-500 tracking-tight`}>{forkResults.recommendedSag}</p>
+              <p className={`text-2xl font-semibold font-display tabular-nums text-brand tracking-tight`}>{forkResults.recommendedSag}</p>
             </div>
             <div>
               <p className={`text-[11px] font-semibold uppercase tracking-wider mb-0.5 ${isDarkMode ? 'text-zinc-500' : 'text-gray-400'}`}>Bike</p>
@@ -190,7 +190,7 @@ export const ResultsView: React.FC<Props> = ({
         
         <button
           onClick={() => setShowQuickEdit(!showQuickEdit)}
-          className={`mt-8 w-full py-3 rounded-2xl text-[15px] font-semibold flex items-center justify-center gap-2 transition-all active:scale-[0.98] ${isDarkMode ? 'bg-zinc-800 text-white' : 'bg-gray-100 text-gray-900'}`}
+          className={`mt-8 w-full py-3 rounded-2xl text-[15px] font-semibold flex items-center justify-center gap-2 transition-all active:scale-[0.98] ${isDarkMode ? 'bg-surface-2 text-white' : 'bg-gray-100 text-gray-900'}`}
         >
           <Settings className="w-4 h-4" />
           Tune inputs
@@ -206,7 +206,7 @@ export const ResultsView: React.FC<Props> = ({
                 type="number"
                 value={formData.weight}
                 onChange={(e) => setFormData({...formData, weight: e.target.value})}
-                className={`w-full p-3 rounded-xl text-sm font-medium ${isDarkMode ? 'bg-zinc-800 text-white' : 'bg-gray-100 text-gray-900'} outline-none`}
+                className={`w-full p-3 rounded-xl text-sm font-medium ${isDarkMode ? 'bg-surface-2 text-white' : 'bg-gray-100 text-gray-900'} outline-none`}
               />
             </div>
             <div>
@@ -214,7 +214,7 @@ export const ResultsView: React.FC<Props> = ({
               <select
                 value={formData.rideType}
                 onChange={(e) => setFormData({...formData, rideType: e.target.value})}
-                className={`w-full p-3 rounded-xl text-sm font-medium ${isDarkMode ? 'bg-zinc-800 text-white' : 'bg-gray-100 text-gray-900'} outline-none`}
+                className={`w-full p-3 rounded-xl text-sm font-medium ${isDarkMode ? 'bg-surface-2 text-white' : 'bg-gray-100 text-gray-900'} outline-none`}
               >
                 {['XC', 'Trail', 'Enduro', 'Bike Park', 'Downhill'].map(r => <option key={r} value={r}>{r}</option>)}
               </select>
@@ -227,7 +227,7 @@ export const ResultsView: React.FC<Props> = ({
         {forkData && (
           <div className={`${cardClass} h-full`}>
             <div className="flex items-center gap-3 mb-5">
-               <div className="w-1.5 h-6 bg-orange-500 rounded-full"></div>
+               <div className="w-1.5 h-6 bg-brand rounded-full"></div>
                <div className="flex-1 min-w-0">
                  <h3 className={`text-lg font-bold ${textPrimary}`}>Fork</h3>
                  <p className={`text-xs ${textSecondary} truncate`}>{formData.frontSuspension}</p>
@@ -259,7 +259,7 @@ export const ResultsView: React.FC<Props> = ({
 
       {(userPreferences.pressureModifier !== 1.0 || userPreferences.reboundModifier !== 0) && (
          <div className="flex justify-center mb-6">
-           <span className={`text-[11px] font-medium px-4 py-1.5 rounded-full border ${isDarkMode ? 'border-zinc-800 text-zinc-500 bg-zinc-900' : 'border-gray-200 text-gray-500 bg-white'}`}>✨ Personalized AI tuning active</span>
+           <span className={`text-[11px] font-medium px-4 py-1.5 rounded-full border ${isDarkMode ? 'border-border-strong text-zinc-500 bg-surface' : 'border-gray-200 text-gray-500 bg-white'}`}>✨ Personalized AI tuning active</span>
          </div>
       )}
     </div>
