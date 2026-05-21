@@ -72,7 +72,7 @@ export default function HomePage() {
             <div className="text-center mb-10 animate-slide-up">
               <h1 className={`text-4xl md:text-5xl font-black mb-4 tracking-tight ${isDarkMode ? 'text-white' : 'text-gray-900'}`}>
                 Perfect suspension.<br />
-                <span className="text-transparent bg-clip-text bg-gradient-to-r from-orange-500 to-red-600">Every ride.</span>
+                <span className="text-brand">Every ride.</span>
               </h1>
               <p className={`text-lg ${isDarkMode ? 'text-zinc-400' : 'text-gray-500'} max-w-xl mx-auto`}>
                 AI-powered calculator for mountain bike suspension. Get the perfect base tune for your weight, bike, and riding style.

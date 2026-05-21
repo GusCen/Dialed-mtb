@@ -50,8 +50,8 @@ export const FeedbackModal: React.FC<Props> = ({ isOpen, onClose, isDarkMode }) 
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm p-4 animate-in fade-in">
-      <div className={`w-full max-w-md rounded-3xl p-6 relative ${isDarkMode ? 'bg-zinc-900 border border-zinc-800' : 'bg-white'} shadow-2xl`}>
-        <button onClick={onClose} className={`absolute top-4 right-4 p-2 rounded-full ${isDarkMode ? 'hover:bg-zinc-800 text-zinc-400' : 'hover:bg-gray-100 text-gray-500'}`}>
+      <div className={`w-full max-w-md rounded-3xl p-6 relative ${isDarkMode ? 'bg-surface border border-border-strong' : 'bg-white'} shadow-2xl`}>
+        <button onClick={onClose} className={`absolute top-4 right-4 p-2 rounded-full ${isDarkMode ? 'hover:bg-surface-2 text-zinc-400' : 'hover:bg-gray-100 text-gray-500'}`}>
           <X className="w-5 h-5" />
         </button>
 
@@ -66,7 +66,7 @@ export const FeedbackModal: React.FC<Props> = ({ isOpen, onClose, isDarkMode }) 
         ) : (
           <>
             <div className="flex items-center gap-3 mb-6">
-              <div className="p-3 rounded-full bg-orange-500/10 text-orange-500">
+              <div className="p-3 rounded-full bg-brand/10 text-brand">
                 <MessageSquare className="w-6 h-6" />
               </div>
               <h2 className={`text-xl font-bold ${isDarkMode ? 'text-white' : 'text-gray-900'}`}>Send Feedback</h2>
@@ -107,7 +107,7 @@ export const FeedbackModal: React.FC<Props> = ({ isOpen, onClose, isDarkMode }) 
                   value={message}
                   onChange={(e) => setMessage(e.target.value)}
                   rows={4}
-                  className={`w-full p-4 rounded-xl border ${isDarkMode ? 'bg-zinc-800 border-zinc-700 text-white focus:border-orange-500' : 'bg-gray-50 border-gray-200 text-gray-900 focus:border-orange-500'} outline-none transition-colors resize-none`}
+                  className={`w-full p-4 rounded-xl border ${isDarkMode ? 'bg-surface-2 border-border-strong text-white focus:border-brand' : 'bg-gray-50 border-gray-200 text-gray-900 focus:border-brand'} outline-none transition-colors resize-none`}
                   placeholder="Tell us what you think..."
                 />
               </div>
@@ -115,7 +115,7 @@ export const FeedbackModal: React.FC<Props> = ({ isOpen, onClose, isDarkMode }) 
               <button
                 type="submit"
                 disabled={submitting || rating === 0}
-                className="w-full py-3.5 rounded-xl bg-orange-500 text-white font-bold hover:bg-orange-600 active:scale-[0.98] transition-all disabled:opacity-50 disabled:cursor-not-allowed"
+                className="w-full py-3.5 rounded-xl bg-brand text-white font-bold hover:bg-brand-hover active:scale-[0.98] transition-all disabled:opacity-50 disabled:cursor-not-allowed"
               >
                 {submitting ? 'Sending...' : 'Submit Feedback'}
               </button>

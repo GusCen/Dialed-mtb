@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Share, PlusSquare, X } from 'lucide-react';
+import { Share, PlusSquare, X, Mountain } from 'lucide-react';
 
 interface Props {
   isDarkMode: boolean;
@@ -47,17 +47,17 @@ export const AddToHomeScreen: React.FC<Props> = ({ isDarkMode }) => {
   if (!showPrompt) return null;
 
   return (
-    <div className={`fixed bottom-4 left-4 right-4 z-50 p-4 rounded-2xl shadow-2xl border animate-in slide-in-from-bottom-10 duration-500 ${isDarkMode ? 'bg-zinc-900 border-zinc-800 text-white' : 'bg-white border-gray-200 text-gray-900'}`}>
+    <div className={`fixed bottom-24 md:bottom-4 left-4 right-4 z-50 p-4 rounded-2xl shadow-2xl border animate-in slide-in-from-bottom-10 duration-500 ${isDarkMode ? 'bg-surface border-border-strong text-white' : 'bg-surface-light border-border-light text-gray-900'}`}>
       <button 
         onClick={handleClose}
-        className={`absolute top-2 right-2 p-1 rounded-full ${isDarkMode ? 'text-zinc-500 hover:bg-zinc-800' : 'text-gray-400 hover:bg-gray-100'}`}
+        className={`absolute top-2 right-2 p-1 rounded-full ${isDarkMode ? 'text-zinc-500 hover:bg-surface-2' : 'text-gray-400 hover:bg-gray-100'}`}
       >
         <X className="w-4 h-4" />
       </button>
 
       <div className="flex gap-4">
-        <div className="w-12 h-12 bg-gradient-to-br from-orange-500 to-red-600 rounded-xl flex items-center justify-center shadow-lg shrink-0">
-           <span className="text-white font-bold text-xl font-display">D</span>
+        <div className="w-12 h-12 bg-brand rounded-xl flex items-center justify-center shadow-lg shrink-0">
+          <Mountain className="w-7 h-7 text-white" strokeWidth={2.5} />
         </div>
         <div>
           <h3 className="font-bold text-sm mb-1">Install Dialed App</h3>

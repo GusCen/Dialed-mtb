@@ -143,21 +143,21 @@ export const SuspensionForm: React.FC<Props> = ({
   // iOS-style Input Classes
   const inputClass = `w-full px-4 py-3.5 rounded-2xl text-[17px] font-medium transition-all duration-200 ${
             isDarkMode 
-              ? 'bg-zinc-800/80 text-white placeholder-zinc-500 focus:bg-zinc-800' 
-              : 'bg-white text-gray-900 placeholder-gray-400 border border-gray-100 shadow-sm focus:border-orange-500/30'
+              ? 'bg-surface-2/80 text-white placeholder-zinc-500 focus:bg-surface-2' 
+              : 'bg-white text-gray-900 placeholder-gray-400 border border-gray-100 shadow-sm focus:border-brand/30'
           } outline-none`;
 
   const miniSelectClass = `w-full px-3 py-3 rounded-xl text-sm transition-all duration-200 ${
             isDarkMode 
-               ? 'bg-zinc-900 text-white border border-zinc-700 focus:border-orange-500/50' 
-               : 'bg-gray-50 text-gray-900 border border-gray-200 focus:border-orange-500/50'
+               ? 'bg-surface text-white border border-border-strong focus:border-brand/50' 
+               : 'bg-gray-50 text-gray-900 border border-gray-200 focus:border-brand/50'
           } outline-none appearance-none disabled:opacity-30 disabled:cursor-not-allowed`;
           
   const labelClass = `block text-[13px] font-medium mb-2 ml-1 tracking-tight ${isDarkMode ? 'text-zinc-400' : 'text-zinc-500'}`;
   const subLabelClass = `block text-[11px] font-medium mb-1.5 ml-1 ${isDarkMode ? 'text-zinc-500' : 'text-zinc-400'}`;
   
   // Grouped container style
-  const containerClass = `p-5 rounded-3xl ${isDarkMode ? 'bg-zinc-800/40 border border-zinc-800' : 'bg-white border border-gray-100 shadow-sm'}`;
+  const containerClass = `p-5 rounded-3xl ${isDarkMode ? 'bg-surface-2/40 border border-border-strong' : 'bg-white border border-gray-100 shadow-sm'}`;
 
   const isFormComplete = formData.weight && formData.frontSuspension && formData.rearShock;
 
@@ -167,13 +167,13 @@ export const SuspensionForm: React.FC<Props> = ({
       {/* Market Research Modal */}
       {showResearch && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-md p-6 animate-in fade-in">
-          <div className={`w-full max-w-md max-h-[80vh] overflow-y-auto rounded-3xl p-6 relative ${isDarkMode ? 'bg-zinc-900 border border-zinc-800' : 'bg-white'} shadow-2xl no-scrollbar`}>
-            <button onClick={() => setShowResearch(false)} className={`absolute top-4 right-4 p-2 rounded-full ${isDarkMode ? 'bg-zinc-800 text-zinc-400' : 'bg-gray-100 text-gray-500'}`}>
+          <div className={`w-full max-w-md max-h-[80vh] overflow-y-auto rounded-3xl p-6 relative ${isDarkMode ? 'bg-surface border border-border-strong' : 'bg-white'} shadow-2xl no-scrollbar`}>
+            <button onClick={() => setShowResearch(false)} className={`absolute top-4 right-4 p-2 rounded-full ${isDarkMode ? 'bg-surface-2 text-zinc-400' : 'bg-gray-100 text-gray-500'}`}>
               <X className="w-5 h-5" />
             </button>
             
             <div className="flex items-center gap-3 mb-6">
-              <BookOpen className="w-6 h-6 text-orange-500" />
+              <BookOpen className="w-6 h-6 text-brand" />
               <h2 className={`text-xl font-bold ${isDarkMode ? 'text-white' : 'text-gray-900'}`}>E-MTB Market Research</h2>
             </div>
             
@@ -183,8 +183,8 @@ export const SuspensionForm: React.FC<Props> = ({
                 <p>E-MTBs are typically 8-10kg heavier than muscle bikes (21-24kg vs 13-15kg). The added mass and motor torque significantly impact suspension dynamics.</p>
               </section>
               
-              <section className={`p-4 rounded-xl ${isDarkMode ? 'bg-zinc-800/50' : 'bg-gray-50'}`}>
-                <h3 className={`font-semibold mb-3 ${isDarkMode ? 'text-orange-400' : 'text-orange-600'}`}>Tuning Principles</h3>
+              <section className={`p-4 rounded-xl ${isDarkMode ? 'bg-surface-2/50' : 'bg-gray-50'}`}>
+                <h3 className={`font-semibold mb-3 ${isDarkMode ? 'text-brand' : 'text-brand'}`}>Tuning Principles</h3>
                 <ul className="space-y-2 list-disc pl-4">
                   <li><strong>Pressure (PSI):</strong> Requires ~18% higher pressure to support the heavier chassis and prevent diving.</li>
                   <li><strong>Rebound:</strong> Needs to be faster (1-2 clicks) to keep the suspension active and ready for repetitive hits.</li>
@@ -197,12 +197,12 @@ export const SuspensionForm: React.FC<Props> = ({
                  <h3 className={`font-semibold mb-2 ${isDarkMode ? 'text-white' : 'text-gray-900'}`}>Included Models (2025-2026)</h3>
                  <p className="mb-2">Our database now includes specs for market leaders:</p>
                  <div className="grid grid-cols-2 gap-2 text-xs">
-                   <div className={`px-3 py-2 rounded-lg ${isDarkMode ? 'bg-zinc-800' : 'bg-gray-100'}`}>Santa Cruz Heckler</div>
-                   <div className={`px-3 py-2 rounded-lg ${isDarkMode ? 'bg-zinc-800' : 'bg-gray-100'}`}>Santa Cruz Bullit</div>
-                   <div className={`px-3 py-2 rounded-lg ${isDarkMode ? 'bg-zinc-800' : 'bg-gray-100'}`}>Trek Fuel EXe</div>
-                   <div className={`px-3 py-2 rounded-lg ${isDarkMode ? 'bg-zinc-800' : 'bg-gray-100'}`}>Trek Rail</div>
-                   <div className={`px-3 py-2 rounded-lg ${isDarkMode ? 'bg-zinc-800' : 'bg-gray-100'}`}>YT Decoy & MX</div>
-                   <div className={`px-3 py-2 rounded-lg ${isDarkMode ? 'bg-zinc-800' : 'bg-gray-100'}`}>Radon Render</div>
+                   <div className={`px-3 py-2 rounded-lg ${isDarkMode ? 'bg-surface-2' : 'bg-gray-100'}`}>Santa Cruz Heckler</div>
+                   <div className={`px-3 py-2 rounded-lg ${isDarkMode ? 'bg-surface-2' : 'bg-gray-100'}`}>Santa Cruz Bullit</div>
+                   <div className={`px-3 py-2 rounded-lg ${isDarkMode ? 'bg-surface-2' : 'bg-gray-100'}`}>Trek Fuel EXe</div>
+                   <div className={`px-3 py-2 rounded-lg ${isDarkMode ? 'bg-surface-2' : 'bg-gray-100'}`}>Trek Rail</div>
+                   <div className={`px-3 py-2 rounded-lg ${isDarkMode ? 'bg-surface-2' : 'bg-gray-100'}`}>YT Decoy & MX</div>
+                   <div className={`px-3 py-2 rounded-lg ${isDarkMode ? 'bg-surface-2' : 'bg-gray-100'}`}>Radon Render</div>
                  </div>
               </section>
             </div>
@@ -232,18 +232,18 @@ export const SuspensionForm: React.FC<Props> = ({
               <label className={`${labelClass} mb-0`}>Bike type</label>
               <button 
                 onClick={() => setShowResearch(true)}
-                className={`text-[11px] font-medium flex items-center gap-1 ${isDarkMode ? 'text-orange-400 hover:text-orange-300' : 'text-orange-600 hover:text-orange-700'}`}
+                className={`text-[11px] font-medium flex items-center gap-1 ${isDarkMode ? 'text-brand hover:text-brand' : 'text-brand hover:text-brand'}`}
               >
                 <BookOpen className="w-3 h-3" />
                 Market Insights
               </button>
            </div>
-           <div className={`p-1 rounded-xl flex ${isDarkMode ? 'bg-zinc-900' : 'bg-gray-200'}`}>
+           <div className={`p-1 rounded-xl flex ${isDarkMode ? 'bg-surface' : 'bg-gray-200'}`}>
               <button
                  onClick={() => handleBikeTypeChange('muscle')}
                  className={`flex-1 flex items-center justify-center gap-2 py-2.5 rounded-lg text-sm font-semibold transition-all duration-200 ${
                    formData.bikeType !== 'ebike' 
-                     ? `${isDarkMode ? 'bg-zinc-800 text-white shadow-lg' : 'bg-white text-gray-900 shadow-sm'}` 
+                     ? `${isDarkMode ? 'bg-surface-2 text-white shadow-lg' : 'bg-white text-gray-900 shadow-sm'}` 
                      : `${isDarkMode ? 'text-zinc-500 hover:text-zinc-300' : 'text-gray-500 hover:text-gray-900'}`
                  }`}
               >
@@ -254,11 +254,11 @@ export const SuspensionForm: React.FC<Props> = ({
                  onClick={() => handleBikeTypeChange('ebike')}
                  className={`flex-1 flex items-center justify-center gap-2 py-2.5 rounded-lg text-sm font-semibold transition-all duration-200 ${
                    formData.bikeType === 'ebike' 
-                     ? `${isDarkMode ? 'bg-zinc-800 text-white shadow-lg' : 'bg-white text-gray-900 shadow-sm'}` 
+                     ? `${isDarkMode ? 'bg-surface-2 text-white shadow-lg' : 'bg-white text-gray-900 shadow-sm'}` 
                      : `${isDarkMode ? 'text-zinc-500 hover:text-zinc-300' : 'text-gray-500 hover:text-gray-900'}`
                  }`}
               >
-                 <Zap className="w-4 h-4 text-orange-500" fill={formData.bikeType === 'ebike' ? "currentColor" : "none"} />
+                 <Zap className="w-4 h-4 text-brand" fill={formData.bikeType === 'ebike' ? "currentColor" : "none"} />
                  E-Bike
               </button>
            </div>
@@ -299,7 +299,7 @@ export const SuspensionForm: React.FC<Props> = ({
         <div className={`animate-slide-up stagger-3 ${containerClass} h-full`}>
           <div className="flex justify-between items-center mb-4 border-b border-dashed border-gray-500/20 pb-2">
             <label className={`text-sm font-semibold ${isDarkMode ? 'text-white' : 'text-gray-900'}`}>Front fork</label>
-            <span className={`text-[10px] font-bold px-2 py-0.5 rounded-full uppercase tracking-wider ${isDarkMode ? 'bg-orange-500/10 text-orange-400' : 'bg-orange-50 text-orange-600'}`}>Step 1</span>
+            <span className={`text-[10px] font-bold px-2 py-0.5 rounded-full uppercase tracking-wider ${isDarkMode ? 'bg-brand/10 text-brand' : 'bg-brand/10 text-brand'}`}>Step 1</span>
           </div>
           <div className="space-y-3">
             <div>
@@ -332,7 +332,7 @@ export const SuspensionForm: React.FC<Props> = ({
         <div className={`animate-slide-up stagger-4 ${containerClass} h-full`}>
           <div className="flex justify-between items-center mb-4 border-b border-dashed border-gray-500/20 pb-2">
             <label className={`text-sm font-semibold ${isDarkMode ? 'text-white' : 'text-gray-900'}`}>Rear shock</label>
-            <span className={`text-[10px] font-bold px-2 py-0.5 rounded-full uppercase tracking-wider ${isDarkMode ? 'bg-orange-500/10 text-orange-400' : 'bg-orange-50 text-orange-600'}`}>Step 2</span>
+            <span className={`text-[10px] font-bold px-2 py-0.5 rounded-full uppercase tracking-wider ${isDarkMode ? 'bg-brand/10 text-brand' : 'bg-brand/10 text-brand'}`}>Step 2</span>
           </div>
           <div className="space-y-3">
              <div>
@@ -372,9 +372,9 @@ export const SuspensionForm: React.FC<Props> = ({
               onClick={() => setFormData({...formData, rideType: type})}
               className={`px-4 py-2.5 rounded-full text-sm font-medium transition-all duration-200 active:scale-95 ${
                 formData.rideType === type
-                  ? 'bg-orange-500 text-white shadow-lg shadow-orange-500/30'
+                  ? 'bg-brand text-white shadow-lg shadow-brand/30'
                   : isDarkMode
-                    ? 'bg-zinc-800 text-zinc-400 hover:bg-zinc-700'
+                    ? 'bg-surface-2 text-zinc-400 hover:bg-surface-2'
                     : 'bg-white text-gray-500 border border-gray-100 hover:bg-gray-50'
               }`}
             >
@@ -389,9 +389,9 @@ export const SuspensionForm: React.FC<Props> = ({
         disabled={!isFormComplete}
         className={`w-full py-4.5 rounded-2xl text-[17px] font-bold tracking-tight transition-all duration-300 shadow-xl ${
           isFormComplete
-            ? 'bg-orange-500 text-white shadow-orange-500/20 hover:bg-orange-600 hover:scale-[1.02] active:scale-95'
+            ? 'bg-brand text-white shadow-brand/20 hover:bg-brand-hover hover:scale-[1.02] active:scale-95'
             : isDarkMode 
-                ? 'bg-zinc-800 text-zinc-600 cursor-not-allowed'
+                ? 'bg-surface-2 text-zinc-600 cursor-not-allowed'
                 : 'bg-gray-200 text-gray-400 cursor-not-allowed'
         }`}
       >

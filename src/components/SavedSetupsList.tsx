@@ -15,7 +15,7 @@ export const SavedSetupsList: React.FC<Props> = ({ setups, onLoad, onDelete, onR
 
   const textPrimary = isDarkMode ? 'text-white' : 'text-gray-900';
   const textSecondary = isDarkMode ? 'text-zinc-400' : 'text-gray-500';
-  const cardClass = `p-5 rounded-3xl mb-4 transition-all duration-200 ${isDarkMode ? 'bg-zinc-900 active:bg-zinc-800' : 'bg-white shadow-sm hover:shadow-md border border-gray-100 active:bg-gray-50'}`;
+  const cardClass = `p-5 rounded-3xl mb-4 transition-all duration-200 ${isDarkMode ? 'bg-surface active:bg-surface-2' : 'bg-white shadow-sm hover:shadow-md border border-gray-100 active:bg-gray-50'}`;
 
   if (setups.length === 0) {
     return (
@@ -37,20 +37,20 @@ export const SavedSetupsList: React.FC<Props> = ({ setups, onLoad, onDelete, onR
               <div>
                 <h3 className={`font-bold text-[17px] ${textPrimary} mb-1`}>{setup.name}</h3>
                 <div className="flex items-center gap-2">
-                   <span className={`text-[13px] font-medium px-2 py-0.5 rounded-md ${isDarkMode ? 'bg-zinc-800 text-zinc-400' : 'bg-gray-100 text-gray-500'}`}>{setup.formData?.rideType}</span>
+                   <span className={`text-[13px] font-medium px-2 py-0.5 rounded-md ${isDarkMode ? 'bg-surface-2 text-zinc-400' : 'bg-gray-100 text-gray-500'}`}>{setup.formData?.rideType}</span>
                    <span className={`text-[13px] ${textSecondary}`}>{setup.formData?.bikeModel}</span>
                 </div>
               </div>
               <button 
                  onClick={(e) => { e.stopPropagation(); onLoad(setup); }}
-                 className={`p-2 rounded-full ${isDarkMode ? 'bg-zinc-800 text-zinc-400' : 'bg-gray-100 text-gray-400'}`}
+                 className={`p-2 rounded-full ${isDarkMode ? 'bg-surface-2 text-zinc-400' : 'bg-gray-100 text-gray-400'}`}
               >
                 <ChevronRight className="w-4 h-4" />
               </button>
             </div>
             
             {/* Rating Section */}
-            <div className={`pt-4 border-t ${isDarkMode ? 'border-zinc-800' : 'border-gray-100'}`}>
+            <div className={`pt-4 border-t ${isDarkMode ? 'border-border-strong' : 'border-gray-100'}`}>
               {setup.rating ? (
                 <div className="flex items-center justify-between">
                   <div className="flex items-center gap-2">
@@ -59,7 +59,7 @@ export const SavedSetupsList: React.FC<Props> = ({ setups, onLoad, onDelete, onR
                         <Star key={star} className={`w-3.5 h-3.5 ${star <= setup.rating! ? 'fill-yellow-400 text-yellow-400' : 'text-zinc-700'}`} />
                       ))}
                     </div>
-                    {setup.feedback && <span className={`text-[11px] font-medium px-2 py-0.5 rounded-full ${isDarkMode ? 'bg-zinc-800 text-zinc-400' : 'bg-gray-100 text-gray-500'}`}>{setup.feedback}</span>}
+                    {setup.feedback && <span className={`text-[11px] font-medium px-2 py-0.5 rounded-full ${isDarkMode ? 'bg-surface-2 text-zinc-400' : 'bg-gray-100 text-gray-500'}`}>{setup.feedback}</span>}
                   </div>
                   <button onClick={() => onDelete(setup.id)} className="text-zinc-500 hover:text-red-500 p-1">
                     <Trash2 className="w-4 h-4" />
@@ -78,7 +78,7 @@ export const SavedSetupsList: React.FC<Props> = ({ setups, onLoad, onDelete, onR
                             onRate(setup.id, rating, fb as any);
                             setRatingId(null);
                           }}
-                          className={`text-[11px] font-medium px-3 py-1.5 rounded-full border transition-colors ${isDarkMode ? 'border-zinc-700 hover:bg-zinc-700 text-zinc-300' : 'border-gray-200 hover:bg-gray-50 text-gray-600'}`}
+                          className={`text-[11px] font-medium px-3 py-1.5 rounded-full border transition-colors ${isDarkMode ? 'border-border-strong hover:bg-surface-2 text-zinc-300' : 'border-gray-200 hover:bg-gray-50 text-gray-600'}`}
                         >
                           {fb}
                         </button>
@@ -89,7 +89,7 @@ export const SavedSetupsList: React.FC<Props> = ({ setups, onLoad, onDelete, onR
                    <div className="flex justify-between items-center">
                       <button 
                         onClick={() => setRatingId(setup.id)}
-                        className={`text-[13px] font-medium ${isDarkMode ? 'text-orange-400' : 'text-orange-600'} hover:opacity-80 transition-opacity`}
+                        className={`text-[13px] font-medium ${isDarkMode ? 'text-brand' : 'text-brand'} hover:opacity-80 transition-opacity`}
                       >
                         Rate this setup
                       </button>
