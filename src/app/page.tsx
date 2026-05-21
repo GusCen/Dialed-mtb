@@ -1,23 +1,18 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
-import { Mountain, Bookmark, User, LogOut, MessageSquare } from 'lucide-react';
-import { FormData, SavedSetup, UserPreferences } from '@/types';
+import React, { useState } from 'react';
 import { SuspensionForm } from '@/components/SuspensionForm';
 import { ResultsView } from '@/components/ResultsView';
-import { SavedSetupsList } from '@/components/SavedSetupsList';
-import { useAuth } from '@/contexts/AuthContext';
-import { LoginModal } from '@/components/LoginModal';
-import { FeedbackModal } from '@/components/FeedbackModal';
-import { AddToHomeScreen } from '@/components/AddToHomeScreen';
+import { useTheme } from '@/contexts/ThemeContext';
+import { useSetups } from '@/contexts/SetupsContext';
 
 // Technical Wireframe Background Component
 const ShockBackground = ({ isDarkMode }: { isDarkMode: boolean }) => (
   <div className="fixed inset-0 z-0 pointer-events-none overflow-hidden flex items-center justify-center">
-    <svg 
-      className={`w-[140%] h-[140%] md:w-full md:h-full max-w-[1200px] opacity-[0.03] ${isDarkMode ? 'stroke-white' : 'stroke-black'}`} 
-      viewBox="0 0 800 1200" 
-      fill="none" 
+    <svg
+      className={`w-[140%] h-[140%] md:w-full md:h-full max-w-[1200px] opacity-[0.03] ${isDarkMode ? 'stroke-white' : 'stroke-black'}`}
+      viewBox="0 0 800 1200"
+      fill="none"
       strokeWidth="1.5"
       style={{ transform: 'rotate(-5deg)' }}
     >
@@ -61,236 +56,15 @@ const ShockBackground = ({ isDarkMode }: { isDarkMode: boolean }) => (
   </div>
 );
 
-export default function App() {
-  const [view, setView] = useState<'input' | 'results' | 'saved'>('input');
+export default function HomePage() {
+  const [view, setView]                 = useState<'input' | 'results'>('input');
   const [showQuickEdit, setShowQuickEdit] = useState(false);
-  const [isDarkMode, setIsDarkMode] = useState(true);
-  const [showLoginModal, setShowLoginModal] = useState(false);
-  const [showFeedbackModal, setShowFeedbackModal] = useState(false);
-
-  const { user, logout, isAuthenticated, isLoading } = useAuth();
-
-  const [savedSetups, setSavedSetups] = useState<SavedSetup[]>([]);
-  const [userPreferences, setUserPreferences] = useState<UserPreferences>({
-    pressureModifier: 1.0,
-    reboundModifier: 0
-  });
-
-  const [formData, setFormData] = useState<FormData>({
-    weight: '',
-    bikeType: 'muscle',
-    bikeCategory: 'trail',
-    bikeModel: '',
-    frontSuspension: '',
-    rearShock: '',
-    rideType: 'Trail',
-    terrain: 'Mixed'
-  });
-
-  // Load theme from localStorage (device-local).
-  useEffect(() => {
-    const theme = localStorage.getItem('mtb-theme');
-    if (theme) setIsDarkMode(theme === 'dark');
-  }, []);
-
-  // Load setups from the API; fall back to localStorage if the request fails.
-  // Wait until the auth session is resolved to avoid a guest fetch followed by a user fetch.
-  useEffect(() => {
-    if (isLoading) return;
-    const loadSetups = async () => {
-      try {
-        const res = await fetch(`/api/setups?userId=${user?.id ?? 'guest'}`);
-        if (!res.ok) throw new Error(`${res.status}`);
-        const data: SavedSetup[] = await res.json();
-        setSavedSetups(data);
-        localStorage.setItem('mtb-saved-setups', JSON.stringify(data));
-      } catch {
-        const local = localStorage.getItem('mtb-saved-setups');
-        if (local) setSavedSetups(JSON.parse(local));
-      }
-    };
-    loadSetups();
-  }, [user?.id, isLoading]);
-
-  // Load preferences from the API; fall back to localStorage cache, then defaults.
-  useEffect(() => {
-    if (isLoading) return;
-    const loadPreferences = async () => {
-      try {
-        const res = await fetch(`/api/preferences?userId=${user?.id ?? 'guest'}`);
-        if (!res.ok) throw new Error(`${res.status}`);
-        const data: UserPreferences | null = await res.json();
-        if (data) {
-          const prefs: UserPreferences = {
-            pressureModifier: data.pressureModifier ?? 1.0,
-            reboundModifier: data.reboundModifier ?? 0,
-          };
-          setUserPreferences(prefs);
-          localStorage.setItem('mtb-preferences', JSON.stringify(prefs));
-          return;
-        }
-        const local = localStorage.getItem('mtb-preferences');
-        if (local) setUserPreferences(JSON.parse(local));
-      } catch {
-        const local = localStorage.getItem('mtb-preferences');
-        if (local) setUserPreferences(JSON.parse(local));
-      }
-    };
-    loadPreferences();
-  }, [user?.id, isLoading]);
-
-  const saveSetupsLocally = (setups: SavedSetup[]) => {
-    setSavedSetups(setups);
-    localStorage.setItem('mtb-saved-setups', JSON.stringify(setups));
-  };
-
-  const savePreferences = (prefs: UserPreferences) => {
-    setUserPreferences(prefs);
-    localStorage.setItem('mtb-preferences', JSON.stringify(prefs));
-  };
-
-  const toggleTheme = () => {
-    const newMode = !isDarkMode;
-    setIsDarkMode(newMode);
-    localStorage.setItem('mtb-theme', newMode ? 'dark' : 'light');
-  };
-
-  const handleSaveSetup = async (name: string) => {
-    const optimisticSetup: SavedSetup = {
-      id: Date.now().toString(),
-      name,
-      date: new Date().toISOString(),
-      formData: { ...formData },
-    };
-    // Optimistic update so the UI responds immediately.
-    const optimisticList = [optimisticSetup, ...savedSetups];
-    saveSetupsLocally(optimisticList);
-    try {
-      const res = await fetch('/api/setups', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ ...optimisticSetup, userId: user?.id ?? 'guest' }),
-      });
-      if (!res.ok) throw new Error(`${res.status}`);
-      // Replace the optimistic entry (timestamp id) with the real row (UUID) from Supabase.
-      const saved: SavedSetup = await res.json();
-      const confirmedList = optimisticList.map(s =>
-        s.id === optimisticSetup.id ? saved : s
-      );
-      saveSetupsLocally(confirmedList);
-    } catch {
-      console.error('Failed to save setup to API; stored locally as fallback');
-    }
-  };
-
-  const handleDeleteSetup = async (id: string) => {
-    const updatedSetups = savedSetups.filter(s => s.id !== id);
-    saveSetupsLocally(updatedSetups);
-    try {
-      const res = await fetch(`/api/setups?id=${id}&userId=${user?.id ?? 'guest'}`, { method: 'DELETE' });
-      if (!res.ok) throw new Error(`${res.status}`);
-    } catch {
-      console.error('Failed to delete setup from API; removed locally as fallback');
-    }
-  };
-
-  const handleRateSetup = async (id: string, rating: number, feedback: SavedSetup['feedback']) => {
-    const updatedSetups = savedSetups.map(s =>
-      s.id === id ? { ...s, rating, feedback } : s
-    );
-    saveSetupsLocally(updatedSetups);
-    try {
-      const res = await fetch(`/api/setups?id=${id}&userId=${user?.id ?? 'guest'}`, {
-        method: 'PUT',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ rating, feedback }),
-      });
-      if (!res.ok) throw new Error(`${res.status}`);
-    } catch {
-      console.error('Failed to update rating on API; updated locally as fallback');
-    }
-    const newPrefs = { ...userPreferences };
-    if (feedback === 'Too Soft')  newPrefs.pressureModifier += 0.03;
-    else if (feedback === 'Too Hard')  newPrefs.pressureModifier -= 0.03;
-    else if (feedback === 'Too Fast')  newPrefs.reboundModifier -= 1;
-    else if (feedback === 'Too Slow')  newPrefs.reboundModifier += 1;
-    newPrefs.pressureModifier = Math.max(0.8, Math.min(1.3, newPrefs.pressureModifier));
-    savePreferences(newPrefs);
-    try {
-      const prefsRes = await fetch('/api/preferences', {
-        method: 'PUT',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ userId: user?.id ?? 'guest', ...newPrefs }),
-      });
-      if (!prefsRes.ok) throw new Error(`${prefsRes.status}`);
-    } catch {
-      console.error('Failed to persist preferences to API; cached locally as fallback');
-    }
-  };
-
-  const handleLoadSetup = (setup: SavedSetup) => {
-    setFormData(setup.formData);
-    setView('results');
-  };
+  const { isDarkMode }                  = useTheme();
+  const { formData, setFormData, userPreferences, savedSetups, handleSaveSetup } = useSetups();
 
   return (
-    <div className={`min-h-screen transition-colors duration-300 font-sans ${isDarkMode ? 'bg-black text-white' : 'bg-[#f2f2f7] text-gray-900'} relative`}>
+    <div className="relative">
       <ShockBackground isDarkMode={isDarkMode} />
-
-      <header className={`sticky top-0 z-40 backdrop-blur-xl border-b ${isDarkMode ? 'bg-black/80 border-zinc-800' : 'bg-white/70 border-gray-200'}`}>
-        <div className="container mx-auto px-5 h-16 flex items-center justify-between max-w-7xl">
-          <div className="flex items-center gap-2 cursor-pointer active:opacity-70 transition-opacity" onClick={() => setView('input')}>
-            <Mountain className="w-6 h-6 text-orange-500" strokeWidth={2.5} />
-            <span className="text-xl font-bold font-display tracking-tight">Dialed</span>
-          </div>
-          <div className="flex items-center gap-4">
-            <button onClick={toggleTheme} className="text-sm font-medium transition-colors cursor-pointer select-none hidden sm:block">
-              <span className={`${isDarkMode ? 'text-white font-semibold' : 'text-gray-400'}`}>Dark</span>
-              <span className={`mx-2 ${isDarkMode ? 'text-zinc-700' : 'text-gray-300'}`}>|</span>
-              <span className={`${!isDarkMode ? 'text-black font-semibold' : 'text-zinc-600'}`}>Light</span>
-            </button>
-            <button onClick={toggleTheme} className="sm:hidden p-2 rounded-full transition-colors">
-              <div className={`w-5 h-5 rounded-full border-2 ${isDarkMode ? 'border-white bg-white' : 'border-gray-400'}`} />
-            </button>
-            <button
-              onClick={() => setView(view === 'saved' ? 'input' : 'saved')}
-              className={`flex items-center gap-2 px-4 py-2 rounded-full transition-all active:scale-95 ${view === 'saved' ? 'bg-orange-500 text-white shadow-md shadow-orange-500/30' : isDarkMode ? 'bg-zinc-800 text-zinc-400 hover:text-white' : 'bg-white text-gray-500 hover:text-black shadow-sm'}`}
-            >
-              <Bookmark className="w-5 h-5" />
-              <span className="hidden sm:inline font-medium text-sm">Saved</span>
-            </button>
-            {isAuthenticated ? (
-              <div className="relative group">
-                <button className={`flex items-center gap-2 px-2 py-1 rounded-full transition-all ${isDarkMode ? 'hover:bg-zinc-800' : 'hover:bg-gray-100'}`}>
-                  <div className="w-8 h-8 rounded-full bg-orange-500 text-white flex items-center justify-center font-bold text-sm">
-                    {user?.name.charAt(0).toUpperCase()}
-                  </div>
-                </button>
-                <div className={`absolute right-0 mt-2 w-48 py-2 rounded-xl shadow-xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 ${isDarkMode ? 'bg-zinc-900 border border-zinc-800' : 'bg-white border border-gray-100'}`}>
-                  <div className={`px-4 py-2 text-sm border-b ${isDarkMode ? 'border-zinc-800 text-zinc-400' : 'border-gray-100 text-gray-500'}`}>
-                    Signed in as <br />
-                    <span className={`font-medium ${isDarkMode ? 'text-white' : 'text-gray-900'}`}>{user?.name}</span>
-                  </div>
-                  <button
-                    onClick={logout}
-                    className={`w-full text-left px-4 py-2 text-sm flex items-center gap-2 hover:bg-red-500/10 hover:text-red-500 transition-colors ${isDarkMode ? 'text-zinc-300' : 'text-gray-700'}`}
-                  >
-                    <LogOut className="w-4 h-4" /> Sign Out
-                  </button>
-                </div>
-              </div>
-            ) : (
-              <button
-                onClick={() => setShowLoginModal(true)}
-                className={`flex items-center gap-2 px-4 py-2 rounded-full transition-all active:scale-95 font-medium text-sm ${isDarkMode ? 'bg-zinc-800 text-white hover:bg-zinc-700' : 'bg-gray-900 text-white hover:bg-gray-800'}`}
-              >
-                <User className="w-4 h-4" />
-                <span className="hidden sm:inline">Sign In</span>
-              </button>
-            )}
-          </div>
-        </div>
-      </header>
 
       <div className="container mx-auto px-5 py-8 max-w-7xl relative z-10">
         {view === 'input' && (
@@ -325,27 +99,7 @@ export default function App() {
             savedSetups={savedSetups}
           />
         )}
-        {view === 'saved' && (
-          <SavedSetupsList
-            setups={savedSetups}
-            onLoad={handleLoadSetup}
-            onDelete={handleDeleteSetup}
-            onRate={handleRateSetup}
-            isDarkMode={isDarkMode}
-          />
-        )}
       </div>
-
-      <button
-        onClick={() => setShowFeedbackModal(true)}
-        className={`fixed bottom-6 right-6 p-4 rounded-full shadow-2xl transition-all hover:scale-110 active:scale-95 z-40 ${isDarkMode ? 'bg-zinc-800 text-zinc-400 hover:text-white hover:bg-zinc-700' : 'bg-white text-gray-400 hover:text-orange-500 hover:bg-gray-50'}`}
-      >
-        <MessageSquare className="w-6 h-6" />
-      </button>
-
-      <LoginModal isOpen={showLoginModal} onClose={() => setShowLoginModal(false)} isDarkMode={isDarkMode} />
-      <FeedbackModal isOpen={showFeedbackModal} onClose={() => setShowFeedbackModal(false)} isDarkMode={isDarkMode} />
-      <AddToHomeScreen isDarkMode={isDarkMode} />
     </div>
   );
 }
