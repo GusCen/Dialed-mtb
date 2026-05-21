@@ -57,7 +57,7 @@ export const AddToHomeScreen: React.FC<Props> = ({ isDarkMode }) => {
 
       <div className="flex gap-4">
         <div className="w-12 h-12 bg-gradient-to-br from-orange-500 to-red-600 rounded-xl flex items-center justify-center shadow-lg shrink-0">
-           <span className="text-white font-bold text-xl font-orbitron">D</span>
+           <span className="text-white font-bold text-xl font-display">D</span>
         </div>
         <div>
           <h3 className="font-bold text-sm mb-1">Install Dialed App</h3>
