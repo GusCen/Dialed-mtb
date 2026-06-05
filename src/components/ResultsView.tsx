@@ -94,13 +94,39 @@ export const ResultsView: React.FC<Props> = ({
        if (typeof value === 'number') displayValue = `${value} clicks`;
     }
 
+    // Standard damping function code (if this control is a damping knob).
+    const funcCodeMap: Record<string, string> = { lsc: 'LSC', hsc: 'HSC', lsr: 'LSR', hsr: 'HSR' };
+    const funcCode = spec?.func ? funcCodeMap[spec.func] : undefined;
+
+    // Primary label keeps the manufacturer's naming. The four standard damping
+    // names collapse to their own acronym (their natural short form); any other
+    // manufacturer-specific name (e.g. "Open Mode Adjust") is shown verbatim.
+    const standardLabel =
+      /low-speed rebound/i.test(key) ? 'LSR' :
+      /high-speed rebound/i.test(key) ? 'HSR' :
+      /low-speed compression/i.test(key) ? 'LSC' :
+      /high-speed compression/i.test(key) ? 'HSC' :
+      null;
+    const displayLabel = standardLabel ?? key;
+
+    // Show the function code as a reference only when the manufacturer name
+    // doesn't already convey it (i.e. the label isn't the code itself).
+    const showFuncRef = !!funcCode && displayLabel !== funcCode;
+
     return (
       <div key={key} className={`rounded-2xl p-4 flex flex-col justify-between h-full relative overflow-hidden ${isDarkMode ? 'bg-zinc-800/40' : 'bg-gray-50 border border-gray-100'}`}>
         <div className="flex justify-between items-start mb-2">
-           <span className={`text-[10px] font-bold uppercase tracking-wider px-2 py-1 rounded-md ${labelColor}`}>
-             {key.replace('Low-Speed', 'LSC').replace('High-Speed', 'HSC').replace('Rebound', 'Reb').replace('Compression', 'Comp')}
-           </span>
-           {spec.type === 'knob' && <CircleDashed className={`w-4 h-4 ${accentColor} opacity-50`} />}
+           <div className="flex items-center gap-1.5 flex-wrap min-w-0">
+             <span className={`text-[10px] font-bold uppercase tracking-wider px-2 py-1 rounded-md ${labelColor}`}>
+               {displayLabel}
+             </span>
+             {showFuncRef && (
+               <span className={`text-[10px] font-bold uppercase tracking-wider px-1.5 py-1 rounded-md ${isDarkMode ? 'bg-white/5 text-zinc-400' : 'bg-black/5 text-gray-500'}`}>
+                 {funcCode}
+               </span>
+             )}
+           </div>
+           {spec.type === 'knob' && <CircleDashed className={`w-4 h-4 ${accentColor} opacity-50 shrink-0`} />}
         </div>
         
         <div className="my-2">
