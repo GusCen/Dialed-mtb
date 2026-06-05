@@ -11,11 +11,11 @@ export const suspensionDatabase: SuspensionDB = {
       travel: ['120', '130', '140'],
       capabilities: { lsc: true, hsc: true, lsr: true, hsr: true },
       adjustments: {
-        'Air Pressure': { location: 'Top cap, left leg (Blue air cap).', tool: 'Fox shock pump', range: '50-120 PSI' },
-        'Low-Speed Rebound': { location: 'Red inner knob, bottom right leg.', setting: 'clicks from closed', range: '16 clicks', baseline: 8, type: 'knob' },
-        'High-Speed Rebound': { location: 'Red outer ring, bottom right leg.', setting: 'clicks from closed', range: '8 clicks', baseline: 4, type: 'knob' },
-        'Low-Speed Compression': { location: 'Blue inner knob, top right leg.', setting: 'clicks from closed', range: '16 clicks', baseline: 8, type: 'knob' },
-        'High-Speed Compression': { location: 'Blue outer ring, top right leg.', setting: 'clicks from closed', range: '8 clicks', baseline: 4, type: 'knob' }
+        'Air Pressure': { location: 'Top cap, left leg (Blue air cap).', tool: 'Fox shock pump', range: '50-120 PSI', func: 'airSpring' },
+        'Low-Speed Rebound': { location: 'Red inner knob, bottom right leg.', setting: 'clicks from closed', range: '16 clicks', baseline: 8, type: 'knob', func: 'lsr' },
+        'High-Speed Rebound': { location: 'Red outer ring, bottom right leg.', setting: 'clicks from closed', range: '8 clicks', baseline: 4, type: 'knob', func: 'hsr' },
+        'Low-Speed Compression': { location: 'Blue inner knob, top right leg.', setting: 'clicks from closed', range: '16 clicks', baseline: 8, type: 'knob', func: 'lsc' },
+        'High-Speed Compression': { location: 'Blue outer ring, top right leg.', setting: 'clicks from closed', range: '8 clicks', baseline: 4, type: 'knob', func: 'hsc' }
       }
     },
     'Fox 34 Factory FIT4': {
@@ -26,10 +26,10 @@ export const suspensionDatabase: SuspensionDB = {
       travel: ['120', '130', '140'],
       capabilities: { lsc: true, hsc: false, lsr: true, hsr: false },
       adjustments: {
-        'Air Pressure': { location: 'Top cap, left leg (Blue air cap).', tool: 'Fox shock pump', range: '50-120 PSI' },
-        'Low-Speed Rebound': { location: 'Red knob, bottom right leg.', setting: 'clicks from closed', range: '14 clicks', baseline: 7, type: 'knob' },
-        'Open Mode Adjust': { location: 'Black inner dial, top right leg.', setting: 'clicks', range: '22 clicks', baseline: 11, type: 'knob' },
-        'Compression Mode': { location: 'Blue lever, top right leg.', setting: 'Position', range: '3 positions', positions: ['Open', 'Medium', 'Firm'], baseline: 'Open', type: 'lever' }
+        'Air Pressure': { location: 'Top cap, left leg (Blue air cap).', tool: 'Fox shock pump', range: '50-120 PSI', func: 'airSpring' },
+        'Low-Speed Rebound': { location: 'Red knob, bottom right leg.', setting: 'clicks from closed', range: '10 clicks', baseline: 5, type: 'knob', func: 'lsr' },
+        'Open Mode Adjust': { location: 'Black inner dial, top right leg.', setting: 'clicks from closed', range: '22 clicks', baseline: 11, type: 'knob', func: 'lsc' },
+        'Compression Mode': { location: 'Blue lever, top right leg.', setting: 'Position', range: '3 positions', positions: ['Open', 'Medium', 'Firm'], baseline: 'Open', type: 'lever', func: 'modeLever' }
       }
     },
     'Fox 36 Factory GRIP X2': {
@@ -40,11 +40,11 @@ export const suspensionDatabase: SuspensionDB = {
       travel: ['140', '150', '160', '170', '180'],
       capabilities: { lsc: true, hsc: true, lsr: true, hsr: true },
       adjustments: {
-        'Air Pressure': { location: 'Top cap, left leg (Blue air cap).', tool: 'Fox shock pump', range: '50-140 PSI' },
-        'Low-Speed Rebound': { location: 'Red inner knob, bottom right leg.', setting: 'clicks from closed', range: '16 clicks', baseline: 8, type: 'knob' },
-        'High-Speed Rebound': { location: 'Red outer ring, bottom right leg.', setting: 'clicks from closed', range: '8 clicks', baseline: 4, type: 'knob' },
-        'Low-Speed Compression': { location: 'Blue inner knob, top right leg.', setting: 'clicks from closed', range: '22 clicks', baseline: 11, type: 'knob' },
-        'High-Speed Compression': { location: 'Blue outer ring, top right leg.', setting: 'clicks from closed', range: '12 clicks', baseline: 2, type: 'knob' }
+        'Air Pressure': { location: 'Top cap, left leg (Blue air cap).', tool: 'Fox shock pump', range: '50-140 PSI', func: 'airSpring' },
+        'Low-Speed Rebound': { location: 'Red inner knob, bottom right leg.', setting: 'clicks from closed', range: '16 clicks', baseline: 8, type: 'knob', func: 'lsr' },
+        'High-Speed Rebound': { location: 'Red outer ring, bottom right leg.', setting: 'clicks from closed', range: '8 clicks', baseline: 4, type: 'knob', func: 'hsr' },
+        'Low-Speed Compression': { location: 'Blue inner knob, top right leg.', setting: 'clicks from closed', range: '22 clicks', baseline: 11, type: 'knob', func: 'lsc' },
+        'High-Speed Compression': { location: 'Blue outer ring, top right leg.', setting: 'clicks from closed', range: '12 clicks', baseline: 2, type: 'knob', func: 'hsc' }
       }
     },
     'Fox 36 Factory GRIP2': {
@@ -55,11 +55,11 @@ export const suspensionDatabase: SuspensionDB = {
       travel: ['140', '150', '160', '170', '180'],
       capabilities: { lsc: true, hsc: true, lsr: true, hsr: true },
       adjustments: {
-        'Air Pressure': { location: 'Top cap, left leg (Blue air cap).', tool: 'Fox shock pump', range: '50-140 PSI' },
-        'Low-Speed Rebound': { location: 'Red inner knob, bottom right leg.', setting: 'clicks from closed', range: '16 clicks', baseline: 8, type: 'knob' },
-        'High-Speed Rebound': { location: 'Red outer ring, bottom right leg.', setting: 'clicks from closed', range: '8 clicks', baseline: 4, type: 'knob' },
-        'Low-Speed Compression': { location: 'Blue inner knob, top right leg.', setting: 'clicks from closed', range: '16 clicks', baseline: 8, type: 'knob' },
-        'High-Speed Compression': { location: 'Blue outer ring, top right leg.', setting: 'clicks from closed', range: '8 clicks', baseline: 4, type: 'knob' }
+        'Air Pressure': { location: 'Top cap, left leg (Blue air cap).', tool: 'Fox shock pump', range: '50-140 PSI', func: 'airSpring' },
+        'Low-Speed Rebound': { location: 'Red inner knob, bottom right leg.', setting: 'clicks from closed', range: '16 clicks', baseline: 8, type: 'knob', func: 'lsr' },
+        'High-Speed Rebound': { location: 'Red outer ring, bottom right leg.', setting: 'clicks from closed', range: '8 clicks', baseline: 4, type: 'knob', func: 'hsr' },
+        'Low-Speed Compression': { location: 'Blue inner knob, top right leg.', setting: 'clicks from closed', range: '16 clicks', baseline: 8, type: 'knob', func: 'lsc' },
+        'High-Speed Compression': { location: 'Blue outer ring, top right leg.', setting: 'clicks from closed', range: '8 clicks', baseline: 4, type: 'knob', func: 'hsc' }
       }
     },
     'Fox 36 Factory FIT4': {
@@ -70,10 +70,10 @@ export const suspensionDatabase: SuspensionDB = {
       travel: ['140', '150', '160'],
       capabilities: { lsc: true, hsc: false, lsr: true, hsr: false },
       adjustments: {
-        'Air Pressure': { location: 'Top cap, left leg (Blue air cap).', tool: 'Fox shock pump', range: '50-140 PSI' },
-        'Low-Speed Rebound': { location: 'Red knob, bottom right leg.', setting: 'clicks from closed', range: '14 clicks', baseline: 7, type: 'knob' },
-        'Open Mode Adjust': { location: 'Black inner dial, top right leg.', setting: 'clicks', range: '22 clicks', baseline: 11, type: 'knob' },
-        'Compression Mode': { location: 'Blue lever, top right leg.', setting: 'Position', range: '3 positions', positions: ['Open', 'Medium', 'Firm'], baseline: 'Open', type: 'lever' }
+        'Air Pressure': { location: 'Top cap, left leg (Blue air cap).', tool: 'Fox shock pump', range: '50-140 PSI', func: 'airSpring' },
+        'Low-Speed Rebound': { location: 'Red knob, bottom right leg.', setting: 'clicks from closed', range: '10 clicks', baseline: 5, type: 'knob', func: 'lsr' },
+        'Open Mode Adjust': { location: 'Black inner dial, top right leg.', setting: 'clicks from closed', range: '22 clicks', baseline: 11, type: 'knob', func: 'lsc' },
+        'Compression Mode': { location: 'Blue lever, top right leg.', setting: 'Position', range: '3 positions', positions: ['Open', 'Medium', 'Firm'], baseline: 'Open', type: 'lever', func: 'modeLever' }
       }
     },
     'Fox 36 Performance Elite GRIP2': {
@@ -84,11 +84,11 @@ export const suspensionDatabase: SuspensionDB = {
       travel: ['140', '150', '160', '170'],
       capabilities: { lsc: true, hsc: true, lsr: true, hsr: true },
       adjustments: {
-        'Air Pressure': { location: 'Top cap, left leg (Blue air cap).', tool: 'Fox shock pump', range: '50-140 PSI' },
-        'Low-Speed Rebound': { location: 'Red inner knob, bottom right leg.', setting: 'clicks from closed', range: '16 clicks', baseline: 8, type: 'knob' },
-        'High-Speed Rebound': { location: 'Red outer ring, bottom right leg.', setting: 'clicks from closed', range: '8 clicks', baseline: 4, type: 'knob' },
-        'Low-Speed Compression': { location: 'Blue inner knob, top right leg.', setting: 'clicks from closed', range: '16 clicks', baseline: 8, type: 'knob' },
-        'High-Speed Compression': { location: 'Blue outer ring, top right leg.', setting: 'clicks from closed', range: '8 clicks', baseline: 4, type: 'knob' }
+        'Air Pressure': { location: 'Top cap, left leg (Blue air cap).', tool: 'Fox shock pump', range: '50-140 PSI', func: 'airSpring' },
+        'Low-Speed Rebound': { location: 'Red inner knob, bottom right leg.', setting: 'clicks from closed', range: '16 clicks', baseline: 8, type: 'knob', func: 'lsr' },
+        'High-Speed Rebound': { location: 'Red outer ring, bottom right leg.', setting: 'clicks from closed', range: '8 clicks', baseline: 4, type: 'knob', func: 'hsr' },
+        'Low-Speed Compression': { location: 'Blue inner knob, top right leg.', setting: 'clicks from closed', range: '16 clicks', baseline: 8, type: 'knob', func: 'lsc' },
+        'High-Speed Compression': { location: 'Blue outer ring, top right leg.', setting: 'clicks from closed', range: '8 clicks', baseline: 4, type: 'knob', func: 'hsc' }
       }
     },
     'Fox 36 Performance GRIP': {
@@ -99,9 +99,9 @@ export const suspensionDatabase: SuspensionDB = {
       travel: ['140', '150', '160'],
       capabilities: { lsc: false, hsc: false, lsr: true, hsr: false },
       adjustments: {
-        'Air Pressure': { location: 'Top cap, left leg (Blue air cap).', tool: 'Fox shock pump', range: '50-140 PSI' },
-        'Low-Speed Rebound': { location: 'Red knob, bottom right leg.', setting: 'clicks from closed', range: '10 clicks', baseline: 5, type: 'knob' },
-        'Compression Mode': { location: 'Blue lever, top right leg.', setting: 'Position', range: '3 positions', positions: ['Open', 'Medium', 'Firm'], baseline: 'Open', type: 'lever' }
+        'Air Pressure': { location: 'Top cap, left leg (Blue air cap).', tool: 'Fox shock pump', range: '50-140 PSI', func: 'airSpring' },
+        'Low-Speed Rebound': { location: 'Red knob, bottom right leg.', setting: 'clicks from closed', range: '10 clicks', baseline: 5, type: 'knob', func: 'lsr' },
+        'Compression Mode': { location: 'Blue lever, top right leg.', setting: 'Position', range: '3 positions', positions: ['Open', 'Medium', 'Firm'], baseline: 'Open', type: 'lever', func: 'modeLever' }
       }
     },
     'Fox 38 Factory GRIP X2': {
@@ -112,11 +112,11 @@ export const suspensionDatabase: SuspensionDB = {
       travel: ['160', '170', '180'],
       capabilities: { lsc: true, hsc: true, lsr: true, hsr: true },
       adjustments: {
-        'Air Pressure': { location: 'Top cap, left leg (Blue air cap).', tool: 'Fox shock pump', range: '60-150 PSI' },
-        'Low-Speed Rebound': { location: 'Red inner knob, bottom right leg.', setting: 'clicks from closed', range: '16 clicks', baseline: 8, type: 'knob' },
-        'High-Speed Rebound': { location: 'Red outer ring, bottom right leg.', setting: 'clicks from closed', range: '8 clicks', baseline: 4, type: 'knob' },
-        'Low-Speed Compression': { location: 'Blue inner knob, top right leg.', setting: 'clicks from closed', range: '22 clicks', baseline: 11, type: 'knob' },
-        'High-Speed Compression': { location: 'Blue outer ring, top right leg.', setting: 'clicks from closed', range: '12 clicks', baseline: 2, type: 'knob' }
+        'Air Pressure': { location: 'Top cap, left leg (Blue air cap).', tool: 'Fox shock pump', range: '60-150 PSI', func: 'airSpring' },
+        'Low-Speed Rebound': { location: 'Red inner knob, bottom right leg.', setting: 'clicks from closed', range: '16 clicks', baseline: 8, type: 'knob', func: 'lsr' },
+        'High-Speed Rebound': { location: 'Red outer ring, bottom right leg.', setting: 'clicks from closed', range: '8 clicks', baseline: 4, type: 'knob', func: 'hsr' },
+        'Low-Speed Compression': { location: 'Blue inner knob, top right leg.', setting: 'clicks from closed', range: '22 clicks', baseline: 11, type: 'knob', func: 'lsc' },
+        'High-Speed Compression': { location: 'Blue outer ring, top right leg.', setting: 'clicks from closed', range: '12 clicks', baseline: 2, type: 'knob', func: 'hsc' }
       }
     },
     'Fox 38 Factory GRIP2': {
@@ -127,11 +127,11 @@ export const suspensionDatabase: SuspensionDB = {
       travel: ['160', '170', '180'],
       capabilities: { lsc: true, hsc: true, lsr: true, hsr: true },
       adjustments: {
-        'Air Pressure': { location: 'Top cap, left leg (Blue air cap).', tool: 'Fox shock pump', range: '60-150 PSI' },
-        'Low-Speed Rebound': { location: 'Red inner knob, bottom right leg.', setting: 'clicks from closed', range: '16 clicks', baseline: 8, type: 'knob' },
-        'High-Speed Rebound': { location: 'Red outer ring, bottom right leg.', setting: 'clicks from closed', range: '8 clicks', baseline: 4, type: 'knob' },
-        'Low-Speed Compression': { location: 'Blue inner knob, top right leg.', setting: 'clicks from closed', range: '16 clicks', baseline: 8, type: 'knob' },
-        'High-Speed Compression': { location: 'Blue outer ring, top right leg.', setting: 'clicks from closed', range: '8 clicks', baseline: 4, type: 'knob' }
+        'Air Pressure': { location: 'Top cap, left leg (Blue air cap).', tool: 'Fox shock pump', range: '60-150 PSI', func: 'airSpring' },
+        'Low-Speed Rebound': { location: 'Red inner knob, bottom right leg.', setting: 'clicks from closed', range: '16 clicks', baseline: 8, type: 'knob', func: 'lsr' },
+        'High-Speed Rebound': { location: 'Red outer ring, bottom right leg.', setting: 'clicks from closed', range: '8 clicks', baseline: 4, type: 'knob', func: 'hsr' },
+        'Low-Speed Compression': { location: 'Blue inner knob, top right leg.', setting: 'clicks from closed', range: '16 clicks', baseline: 8, type: 'knob', func: 'lsc' },
+        'High-Speed Compression': { location: 'Blue outer ring, top right leg.', setting: 'clicks from closed', range: '8 clicks', baseline: 4, type: 'knob', func: 'hsc' }
       }
     },
     'Fox 38 Performance Elite GRIP2': {
@@ -142,11 +142,11 @@ export const suspensionDatabase: SuspensionDB = {
       travel: ['160', '170', '180'],
       capabilities: { lsc: true, hsc: true, lsr: true, hsr: true },
       adjustments: {
-        'Air Pressure': { location: 'Top cap, left leg (Blue air cap).', tool: 'Fox shock pump', range: '60-150 PSI' },
-        'Low-Speed Rebound': { location: 'Red inner knob, bottom right leg.', setting: 'clicks from closed', range: '16 clicks', baseline: 8, type: 'knob' },
-        'High-Speed Rebound': { location: 'Red outer ring, bottom right leg.', setting: 'clicks from closed', range: '8 clicks', baseline: 4, type: 'knob' },
-        'Low-Speed Compression': { location: 'Blue inner knob, top right leg.', setting: 'clicks from closed', range: '16 clicks', baseline: 8, type: 'knob' },
-        'High-Speed Compression': { location: 'Blue outer ring, top right leg.', setting: 'clicks from closed', range: '8 clicks', baseline: 4, type: 'knob' }
+        'Air Pressure': { location: 'Top cap, left leg (Blue air cap).', tool: 'Fox shock pump', range: '60-150 PSI', func: 'airSpring' },
+        'Low-Speed Rebound': { location: 'Red inner knob, bottom right leg.', setting: 'clicks from closed', range: '16 clicks', baseline: 8, type: 'knob', func: 'lsr' },
+        'High-Speed Rebound': { location: 'Red outer ring, bottom right leg.', setting: 'clicks from closed', range: '8 clicks', baseline: 4, type: 'knob', func: 'hsr' },
+        'Low-Speed Compression': { location: 'Blue inner knob, top right leg.', setting: 'clicks from closed', range: '16 clicks', baseline: 8, type: 'knob', func: 'lsc' },
+        'High-Speed Compression': { location: 'Blue outer ring, top right leg.', setting: 'clicks from closed', range: '8 clicks', baseline: 4, type: 'knob', func: 'hsc' }
       }
     },
     'Fox 40 Factory GRIP X2': {
@@ -157,11 +157,11 @@ export const suspensionDatabase: SuspensionDB = {
       travel: ['180', '190', '203'],
       capabilities: { lsc: true, hsc: true, lsr: true, hsr: true },
       adjustments: {
-        'Spring Preload': { location: 'Blue dial, top left leg.', tool: 'Hand', range: 'Variable', type: 'knob' },
-        'Low-Speed Rebound': { location: 'Red inner knob, bottom right leg.', setting: 'clicks from closed', range: '16 clicks', baseline: 8, type: 'knob' },
-        'High-Speed Rebound': { location: 'Red outer ring, bottom right leg.', setting: 'clicks from closed', range: '8 clicks', baseline: 4, type: 'knob' },
-        'Low-Speed Compression': { location: 'Blue inner knob, top right leg.', setting: 'clicks from closed', range: '22 clicks', baseline: 11, type: 'knob' },
-        'High-Speed Compression': { location: 'Blue outer ring, top right leg.', setting: 'clicks from closed', range: '12 clicks', baseline: 2, type: 'knob' }
+        'Spring Preload': { location: 'Blue dial, top left leg.', tool: 'Hand', range: 'Variable', type: 'knob', func: 'preload' },
+        'Low-Speed Rebound': { location: 'Red inner knob, bottom right leg.', setting: 'clicks from closed', range: '16 clicks', baseline: 8, type: 'knob', func: 'lsr' },
+        'High-Speed Rebound': { location: 'Red outer ring, bottom right leg.', setting: 'clicks from closed', range: '8 clicks', baseline: 4, type: 'knob', func: 'hsr' },
+        'Low-Speed Compression': { location: 'Blue inner knob, top right leg.', setting: 'clicks from closed', range: '22 clicks', baseline: 11, type: 'knob', func: 'lsc' },
+        'High-Speed Compression': { location: 'Blue outer ring, top right leg.', setting: 'clicks from closed', range: '12 clicks', baseline: 2, type: 'knob', func: 'hsc' }
       }
     },
     'Fox 40 Factory GRIP2': {
@@ -172,11 +172,11 @@ export const suspensionDatabase: SuspensionDB = {
       travel: ['203'],
       capabilities: { lsc: true, hsc: true, lsr: true, hsr: true },
       adjustments: {
-        'Spring Preload': { location: 'Blue dial, top left leg.', tool: 'Hand', range: 'Variable', type: 'knob' },
-        'Low-Speed Rebound': { location: 'Red inner knob, bottom right leg.', setting: 'clicks from closed', range: '16 clicks', baseline: 8, type: 'knob' },
-        'High-Speed Rebound': { location: 'Red outer ring, bottom right leg.', setting: 'clicks from closed', range: '8 clicks', baseline: 4, type: 'knob' },
-        'Low-Speed Compression': { location: 'Blue inner knob, top right leg.', setting: 'clicks from closed', range: '16 clicks', baseline: 8, type: 'knob' },
-        'High-Speed Compression': { location: 'Blue outer ring, top right leg.', setting: 'clicks from closed', range: '8 clicks', baseline: 4, type: 'knob' }
+        'Spring Preload': { location: 'Blue dial, top left leg.', tool: 'Hand', range: 'Variable', type: 'knob', func: 'preload' },
+        'Low-Speed Rebound': { location: 'Red inner knob, bottom right leg.', setting: 'clicks from closed', range: '16 clicks', baseline: 8, type: 'knob', func: 'lsr' },
+        'High-Speed Rebound': { location: 'Red outer ring, bottom right leg.', setting: 'clicks from closed', range: '8 clicks', baseline: 4, type: 'knob', func: 'hsr' },
+        'Low-Speed Compression': { location: 'Blue inner knob, top right leg.', setting: 'clicks from closed', range: '16 clicks', baseline: 8, type: 'knob', func: 'lsc' },
+        'High-Speed Compression': { location: 'Blue outer ring, top right leg.', setting: 'clicks from closed', range: '8 clicks', baseline: 4, type: 'knob', func: 'hsc' }
       }
     },
     'RockShox Pike Ultimate RC2': {
@@ -187,10 +187,10 @@ export const suspensionDatabase: SuspensionDB = {
       travel: ['130', '140', '150', '160'],
       capabilities: { lsc: true, hsc: true, lsr: true, hsr: false },
       adjustments: {
-        'Air Pressure': { location: 'Top cap, left leg (remove cap).', tool: 'RockShox pump', range: '50-140 PSI' },
-        'Low-Speed Rebound': { location: 'Red knob, bottom right leg.', setting: 'clicks from closed', range: '18 clicks', baseline: 9, type: 'knob' },
-        'Low-Speed Compression': { location: 'Small silver dial on top right leg.', setting: 'clicks from closed', range: '18 clicks', baseline: 9, type: 'knob' },
-        'High-Speed Compression': { location: 'Large dial on top right leg.', setting: 'clicks from closed', range: '5 clicks', baseline: 2, type: 'knob' }
+        'Air Pressure': { location: 'Top cap, left leg (remove cap).', tool: 'RockShox pump', range: '50-140 PSI', func: 'airSpring' },
+        'Low-Speed Rebound': { location: 'Red knob, bottom right leg.', setting: 'clicks from closed', range: '18 clicks', baseline: 9, type: 'knob', func: 'lsr' },
+        'Low-Speed Compression': { location: 'Small silver dial on top right leg.', setting: 'clicks from closed', range: '18 clicks', baseline: 9, type: 'knob', func: 'lsc' },
+        'High-Speed Compression': { location: 'Large dial on top right leg.', setting: 'clicks from closed', range: '5 clicks', baseline: 2, type: 'knob', func: 'hsc' }
       }
     },
     'RockShox Pike Ultimate RC': {
@@ -201,9 +201,9 @@ export const suspensionDatabase: SuspensionDB = {
       travel: ['130', '140', '150', '160'],
       capabilities: { lsc: true, hsc: false, lsr: true, hsr: false },
       adjustments: {
-        'Air Pressure': { location: 'Top cap, left leg.', tool: 'RockShox pump', range: '50-140 PSI' },
-        'Low-Speed Rebound': { location: 'Red knob, bottom right leg.', setting: 'clicks from closed', range: '18 clicks', baseline: 9, type: 'knob' },
-        'Low-Speed Compression': { location: 'Blue lever, top right leg.', setting: 'Position', range: '3 positions', positions: ['Open', 'Pedal', 'Firm'], baseline: 'Open', type: 'lever' }
+        'Air Pressure': { location: 'Top cap, left leg.', tool: 'RockShox pump', range: '50-140 PSI', func: 'airSpring' },
+        'Low-Speed Rebound': { location: 'Red knob, bottom right leg.', setting: 'clicks from closed', range: '18 clicks', baseline: 9, type: 'knob', func: 'lsr' },
+        'Low-Speed Compression': { location: 'Blue lever, top right leg.', setting: 'Position', range: '3 positions', positions: ['Open', 'Pedal', 'Firm'], baseline: 'Open', type: 'lever', func: 'modeLever' }
       }
     },
     'RockShox Pike Select+ RC': {
@@ -214,9 +214,9 @@ export const suspensionDatabase: SuspensionDB = {
       travel: ['130', '140', '150', '160'],
       capabilities: { lsc: true, hsc: false, lsr: true, hsr: false },
       adjustments: {
-        'Air Pressure': { location: 'Top cap, left leg.', tool: 'RockShox pump', range: '50-140 PSI' },
-        'Low-Speed Rebound': { location: 'Red knob, bottom right leg.', setting: 'clicks from closed', range: '15 clicks', baseline: 8, type: 'knob' },
-        'Low-Speed Compression': { location: 'Blue lever, top right leg.', setting: 'Position', range: '3 positions', positions: ['Open', 'Pedal', 'Firm'], baseline: 'Open', type: 'lever' }
+        'Air Pressure': { location: 'Top cap, left leg.', tool: 'RockShox pump', range: '50-140 PSI', func: 'airSpring' },
+        'Low-Speed Rebound': { location: 'Red knob, bottom right leg.', setting: 'clicks from closed', range: '15 clicks', baseline: 8, type: 'knob', func: 'lsr' },
+        'Low-Speed Compression': { location: 'Blue lever, top right leg.', setting: 'Position', range: '3 positions', positions: ['Open', 'Pedal', 'Firm'], baseline: 'Open', type: 'lever', func: 'modeLever' }
       }
     },
     'RockShox Lyrik Ultimate RC2': {
@@ -227,10 +227,10 @@ export const suspensionDatabase: SuspensionDB = {
       travel: ['160', '170', '180'],
       capabilities: { lsc: true, hsc: true, lsr: true, hsr: false },
       adjustments: {
-        'Air Pressure': { location: 'Top cap, left leg.', tool: 'RockShox pump', range: '60-150 PSI' },
-        'Low-Speed Rebound': { location: 'Red knob, bottom right leg.', setting: 'clicks from closed', range: '18 clicks', baseline: 9, type: 'knob' },
-        'Low-Speed Compression': { location: 'Small silver dial on top right leg.', setting: 'clicks from closed', range: '18 clicks', baseline: 9, type: 'knob' },
-        'High-Speed Compression': { location: 'Large dial on top right leg.', setting: 'clicks from closed', range: '5 clicks', baseline: 2, type: 'knob' }
+        'Air Pressure': { location: 'Top cap, left leg.', tool: 'RockShox pump', range: '60-150 PSI', func: 'airSpring' },
+        'Low-Speed Rebound': { location: 'Red knob, bottom right leg.', setting: 'clicks from closed', range: '18 clicks', baseline: 9, type: 'knob', func: 'lsr' },
+        'Low-Speed Compression': { location: 'Small silver dial on top right leg.', setting: 'clicks from closed', range: '18 clicks', baseline: 9, type: 'knob', func: 'lsc' },
+        'High-Speed Compression': { location: 'Large dial on top right leg.', setting: 'clicks from closed', range: '5 clicks', baseline: 2, type: 'knob', func: 'hsc' }
       }
     },
     'RockShox Lyrik Ultimate RC': {
@@ -241,9 +241,9 @@ export const suspensionDatabase: SuspensionDB = {
       travel: ['160', '170', '180'],
       capabilities: { lsc: true, hsc: false, lsr: true, hsr: false },
       adjustments: {
-        'Air Pressure': { location: 'Top cap, left leg.', tool: 'RockShox pump', range: '60-150 PSI' },
-        'Low-Speed Rebound': { location: 'Red knob, bottom right leg.', setting: 'clicks from closed', range: '18 clicks', baseline: 9, type: 'knob' },
-        'Low-Speed Compression': { location: 'Blue lever, top right leg.', setting: 'Position', range: '3 positions', positions: ['Open', 'Pedal', 'Firm'], baseline: 'Open', type: 'lever' }
+        'Air Pressure': { location: 'Top cap, left leg.', tool: 'RockShox pump', range: '60-150 PSI', func: 'airSpring' },
+        'Low-Speed Rebound': { location: 'Red knob, bottom right leg.', setting: 'clicks from closed', range: '18 clicks', baseline: 9, type: 'knob', func: 'lsr' },
+        'Low-Speed Compression': { location: 'Blue lever, top right leg.', setting: 'Position', range: '3 positions', positions: ['Open', 'Pedal', 'Firm'], baseline: 'Open', type: 'lever', func: 'modeLever' }
       }
     },
     'RockShox Lyrik Select+ RC': {
@@ -254,9 +254,9 @@ export const suspensionDatabase: SuspensionDB = {
       travel: ['160', '170', '180'],
       capabilities: { lsc: true, hsc: false, lsr: true, hsr: false },
       adjustments: {
-        'Air Pressure': { location: 'Top cap, left leg.', tool: 'RockShox pump', range: '60-150 PSI' },
-        'Low-Speed Rebound': { location: 'Red knob, bottom right leg.', setting: 'clicks from closed', range: '15 clicks', baseline: 8, type: 'knob' },
-        'Low-Speed Compression': { location: 'Blue lever, top right leg.', setting: 'Position', range: '3 positions', positions: ['Open', 'Pedal', 'Firm'], baseline: 'Open', type: 'lever' }
+        'Air Pressure': { location: 'Top cap, left leg.', tool: 'RockShox pump', range: '60-150 PSI', func: 'airSpring' },
+        'Low-Speed Rebound': { location: 'Red knob, bottom right leg.', setting: 'clicks from closed', range: '15 clicks', baseline: 8, type: 'knob', func: 'lsr' },
+        'Low-Speed Compression': { location: 'Blue lever, top right leg.', setting: 'Position', range: '3 positions', positions: ['Open', 'Pedal', 'Firm'], baseline: 'Open', type: 'lever', func: 'modeLever' }
       }
     },
     'RockShox ZEB Ultimate RC2': {
@@ -267,10 +267,10 @@ export const suspensionDatabase: SuspensionDB = {
       travel: ['170', '180', '190'],
       capabilities: { lsc: true, hsc: true, lsr: true, hsr: false },
       adjustments: {
-        'Air Pressure': { location: 'Top cap, left leg.', tool: 'RockShox pump', range: '60-150 PSI' },
-        'Low-Speed Rebound': { location: 'Red knob, bottom right leg.', setting: 'clicks from closed', range: '18 clicks', baseline: 9, type: 'knob' },
-        'Low-Speed Compression': { location: 'Small silver dial on top right leg.', setting: 'clicks from closed', range: '18 clicks', baseline: 9, type: 'knob' },
-        'High-Speed Compression': { location: 'Large dial on top right leg.', setting: 'clicks from closed', range: '5 clicks', baseline: 2, type: 'knob' }
+        'Air Pressure': { location: 'Top cap, left leg.', tool: 'RockShox pump', range: '60-150 PSI', func: 'airSpring' },
+        'Low-Speed Rebound': { location: 'Red knob, bottom right leg.', setting: 'clicks from closed', range: '18 clicks', baseline: 9, type: 'knob', func: 'lsr' },
+        'Low-Speed Compression': { location: 'Small silver dial on top right leg.', setting: 'clicks from closed', range: '18 clicks', baseline: 9, type: 'knob', func: 'lsc' },
+        'High-Speed Compression': { location: 'Large dial on top right leg.', setting: 'clicks from closed', range: '5 clicks', baseline: 2, type: 'knob', func: 'hsc' }
       }
     },
     'Öhlins RXF36 M.2': {
@@ -281,11 +281,11 @@ export const suspensionDatabase: SuspensionDB = {
       travel: ['160', '170', '180'],
       capabilities: { lsc: true, hsc: true, lsr: true, hsr: false },
       adjustments: {
-        'Air Pressure': { location: 'Top cap, right leg (Main chamber).', tool: 'Shock pump', range: '60-150 PSI' },
-        'Ramp Up Chamber': { location: 'Valve under bottom of right leg.', tool: 'Shock pump', range: '150-250 PSI' },
-        'Low-Speed Rebound': { location: 'Gold knob, bottom right leg.', setting: 'clicks from closed', range: '16 clicks', baseline: 8, type: 'knob' },
-        'Low-Speed Compression': { location: 'Blue knob, top left leg.', setting: 'clicks from closed', range: '16 clicks', baseline: 8, type: 'knob' },
-        'High-Speed Compression': { location: 'Black lever, top left leg.', setting: 'clicks from closed', range: '3 clicks', baseline: 1, type: 'knob' }
+        'Air Pressure': { location: 'Top cap, right leg (Main chamber).', tool: 'Shock pump', range: '60-150 PSI', func: 'airSpring' },
+        'Ramp Up Chamber': { location: 'Valve under bottom of right leg.', tool: 'Shock pump', range: '150-250 PSI', func: 'rampUp' },
+        'Low-Speed Rebound': { location: 'Gold knob, bottom right leg.', setting: 'clicks from closed', range: '16 clicks', baseline: 8, type: 'knob', func: 'lsr' },
+        'Low-Speed Compression': { location: 'Blue knob, top left leg.', setting: 'clicks from closed', range: '16 clicks', baseline: 8, type: 'knob', func: 'lsc' },
+        'High-Speed Compression': { location: 'Black lever, top left leg.', setting: 'clicks from closed', range: '3 clicks', baseline: 1, type: 'knob', func: 'hsc' }
       }
     }
   },
@@ -297,10 +297,10 @@ export const suspensionDatabase: SuspensionDB = {
       spring: 'FLOAT with volume spacers',
       capabilities: { lsc: true, hsc: false, lsr: true, hsr: false },
       adjustments: {
-        'Air Pressure': { location: 'Schrader valve on main body eyelet.', tool: 'Fox shock pump', range: '100-350 PSI' },
-        'Low-Speed Rebound': { location: 'Red knob near bottom eyelet.', setting: 'clicks from closed', range: '16 clicks', baseline: 8, type: 'knob' },
-        'Low-Speed Compression': { location: 'Blue dial on reservoir.', setting: 'clicks from closed', range: '10 clicks', baseline: 5, type: 'knob' },
-        'Compression Mode': { location: 'Blue lever on reservoir.', setting: 'Position', range: '2 positions', positions: ['Open', 'Firm'], baseline: 'Open', type: 'lever' }
+        'Air Pressure': { location: 'Schrader valve on main body eyelet.', tool: 'Fox shock pump', range: '100-350 PSI', func: 'airSpring' },
+        'Low-Speed Rebound': { location: 'Red knob near bottom eyelet.', setting: 'clicks from closed', range: '16 clicks', baseline: 8, type: 'knob', func: 'lsr' },
+        'Low-Speed Compression': { location: 'Blue dial on reservoir.', setting: 'clicks from closed', range: '10 clicks', baseline: 5, type: 'knob', func: 'lsc' },
+        'Compression Mode': { location: 'Blue lever on reservoir.', setting: 'Position', range: '2 positions', positions: ['Open', 'Firm'], baseline: 'Open', type: 'lever', func: 'modeLever' }
       }
     },
     'Fox Float X Performance Elite 2-Pos': {
@@ -310,10 +310,10 @@ export const suspensionDatabase: SuspensionDB = {
       spring: 'FLOAT EVOL',
       capabilities: { lsc: true, hsc: false, lsr: true, hsr: false },
       adjustments: {
-        'Air Pressure': { location: 'Schrader valve on main body eyelet.', tool: 'Fox shock pump', range: '100-350 PSI' },
-        'Low-Speed Rebound': { location: 'Red knob near bottom eyelet.', setting: 'clicks from closed', range: '12 clicks', baseline: 6, type: 'knob' },
-        'Low-Speed Compression': { location: 'Blue dial on reservoir.', setting: 'clicks from closed', range: '10 clicks', baseline: 5, type: 'knob' },
-        'Compression Mode': { location: 'Blue lever on reservoir.', setting: 'Position', range: '2 positions', positions: ['Open', 'Firm'], baseline: 'Open', type: 'lever' }
+        'Air Pressure': { location: 'Schrader valve on main body eyelet.', tool: 'Fox shock pump', range: '100-350 PSI', func: 'airSpring' },
+        'Low-Speed Rebound': { location: 'Red knob near bottom eyelet.', setting: 'clicks from closed', range: '12 clicks', baseline: 6, type: 'knob', func: 'lsr' },
+        'Low-Speed Compression': { location: 'Blue dial on reservoir.', setting: 'clicks from closed', range: '10 clicks', baseline: 5, type: 'knob', func: 'lsc' },
+        'Compression Mode': { location: 'Blue lever on reservoir.', setting: 'Position', range: '2 positions', positions: ['Open', 'Firm'], baseline: 'Open', type: 'lever', func: 'modeLever' }
       }
     },
     'Fox Float X2 Factory': {
@@ -323,11 +323,11 @@ export const suspensionDatabase: SuspensionDB = {
       spring: 'FLOAT X2 dual air chambers',
       capabilities: { lsc: true, hsc: true, lsr: true, hsr: true },
       adjustments: {
-        'Air Pressure': { location: 'Valve on reservoir (max 300psi).', tool: 'Fox shock pump', range: '100-300 PSI' },
-        'Low-Speed Rebound': { location: 'Inner 3mm hex in red dial (Reservoir eyelet).', setting: 'clicks from closed', range: '16 clicks', baseline: 8, type: 'knob' },
-        'High-Speed Rebound': { location: 'Outer 6mm hex in red dial (Reservoir eyelet).', setting: 'clicks from closed', range: '8 clicks', baseline: 4, type: 'knob' },
-        'Low-Speed Compression': { location: 'Inner 3mm hex in blue dial (Reservoir eyelet).', setting: 'clicks from closed', range: '16 clicks', baseline: 8, type: 'knob' },
-        'High-Speed Compression': { location: 'Outer 6mm hex in blue dial (Reservoir eyelet).', setting: 'clicks from closed', range: '8 clicks', baseline: 4, type: 'knob' }
+        'Air Pressure': { location: 'Valve on reservoir (max 300psi).', tool: 'Fox shock pump', range: '100-300 PSI', func: 'airSpring' },
+        'Low-Speed Rebound': { location: 'Inner 3mm hex in red dial (Reservoir eyelet).', setting: 'clicks from closed', range: '16 clicks', baseline: 8, type: 'knob', func: 'lsr' },
+        'High-Speed Rebound': { location: 'Outer 6mm hex in red dial (Reservoir eyelet).', setting: 'clicks from closed', range: '8 clicks', baseline: 4, type: 'knob', func: 'hsr' },
+        'Low-Speed Compression': { location: 'Inner 3mm hex in blue dial (Reservoir eyelet).', setting: 'clicks from closed', range: '16 clicks', baseline: 8, type: 'knob', func: 'lsc' },
+        'High-Speed Compression': { location: 'Outer 6mm hex in blue dial (Reservoir eyelet).', setting: 'clicks from closed', range: '8 clicks', baseline: 4, type: 'knob', func: 'hsc' }
       }
     },
     'Fox DHX2 Factory': {
@@ -337,11 +337,11 @@ export const suspensionDatabase: SuspensionDB = {
       spring: 'Coil (requires correct spring rate)',
       capabilities: { lsc: true, hsc: true, lsr: true, hsr: true },
       adjustments: {
-        'Spring Preload': { location: 'Preload collar on shock body.', tool: 'Hand', range: 'Variable', type: 'knob' },
-        'Low-Speed Rebound': { location: 'Inner 3mm hex in red dial (Reservoir eyelet).', setting: 'clicks from closed', range: '16 clicks', baseline: 8, type: 'knob' },
-        'High-Speed Rebound': { location: 'Outer 6mm hex in red dial (Reservoir eyelet).', setting: 'clicks from closed', range: '8 clicks', baseline: 4, type: 'knob' },
-        'Low-Speed Compression': { location: 'Inner 3mm hex in blue dial (Reservoir eyelet).', setting: 'clicks from closed', range: '16 clicks', baseline: 8, type: 'knob' },
-        'High-Speed Compression': { location: 'Outer 6mm hex in blue dial (Reservoir eyelet).', setting: 'clicks from closed', range: '8 clicks', baseline: 4, type: 'knob' }
+        'Spring Preload': { location: 'Preload collar on shock body.', tool: 'Hand', range: 'Variable', type: 'knob', func: 'preload' },
+        'Low-Speed Rebound': { location: 'Inner 3mm hex in red dial (Reservoir eyelet).', setting: 'clicks from closed', range: '16 clicks', baseline: 8, type: 'knob', func: 'lsr' },
+        'High-Speed Rebound': { location: 'Outer 6mm hex in red dial (Reservoir eyelet).', setting: 'clicks from closed', range: '8 clicks', baseline: 4, type: 'knob', func: 'hsr' },
+        'Low-Speed Compression': { location: 'Inner 3mm hex in blue dial (Reservoir eyelet).', setting: 'clicks from closed', range: '16 clicks', baseline: 8, type: 'knob', func: 'lsc' },
+        'High-Speed Compression': { location: 'Outer 6mm hex in blue dial (Reservoir eyelet).', setting: 'clicks from closed', range: '8 clicks', baseline: 4, type: 'knob', func: 'hsc' }
       }
     },
     'Fox DPX2 Factory': {
@@ -351,10 +351,10 @@ export const suspensionDatabase: SuspensionDB = {
       spring: 'FLOAT EVOL',
       capabilities: { lsc: true, hsc: false, lsr: true, hsr: false },
       adjustments: {
-        'Air Pressure': { location: 'Air valve on main can.', tool: 'Fox shock pump', range: '100-350 PSI' },
-        'Low-Speed Rebound': { location: 'Red knob.', setting: 'clicks from closed', range: '14 clicks', baseline: 7, type: 'knob' },
-        'Open Mode Adjust': { location: '3mm hex inside blue lever.', setting: 'clicks from closed', range: '10 clicks', baseline: 5, type: 'knob' },
-        'Compression Mode': { location: 'Blue lever.', setting: 'Position', range: '3 positions', positions: ['Open', 'Medium', 'Firm'], baseline: 'Open', type: 'lever' }
+        'Air Pressure': { location: 'Air valve on main can.', tool: 'Fox shock pump', range: '100-350 PSI', func: 'airSpring' },
+        'Low-Speed Rebound': { location: 'Red knob.', setting: 'clicks from closed', range: '14 clicks', baseline: 7, type: 'knob', func: 'lsr' },
+        'Open Mode Adjust': { location: '3mm hex inside blue lever.', setting: 'clicks from closed', range: '10 clicks', baseline: 5, type: 'knob', func: 'lsc' },
+        'Compression Mode': { location: 'Blue lever.', setting: 'Position', range: '3 positions', positions: ['Open', 'Medium', 'Firm'], baseline: 'Open', type: 'lever', func: 'modeLever' }
       }
     },
     'Fox Float DPS Factory 3-Pos': {
@@ -364,10 +364,10 @@ export const suspensionDatabase: SuspensionDB = {
       spring: 'EVOL',
       capabilities: { lsc: true, hsc: false, lsr: true, hsr: false },
       adjustments: {
-        'Air Pressure': { location: 'Air valve on main body.', tool: 'Fox shock pump', range: '100-300 PSI' },
-        'Low-Speed Rebound': { location: 'Red knob near eyelet.', setting: 'clicks from closed', range: '12 clicks', baseline: 6, type: 'knob' },
-        'Open Mode Adjust': { location: 'Black knob inside blue lever.', setting: 'clicks', range: '3 settings (1, 2, 3)', type: 'knob' },
-        'Compression Mode': { location: 'Blue lever.', setting: 'Position', range: '3 positions', positions: ['Open', 'Medium', 'Firm'], baseline: 'Open', type: 'lever' }
+        'Air Pressure': { location: 'Air valve on main body.', tool: 'Fox shock pump', range: '100-300 PSI', func: 'airSpring' },
+        'Low-Speed Rebound': { location: 'Red knob near eyelet.', setting: 'clicks from closed', range: '12 clicks', baseline: 6, type: 'knob', func: 'lsr' },
+        'Open Mode Adjust': { location: 'Black knob inside blue lever.', setting: 'Position', range: '3 settings (1, 2, 3)', positions: ['1', '2', '3'], type: 'knob', func: 'lsc' },
+        'Compression Mode': { location: 'Blue lever.', setting: 'Position', range: '3 positions', positions: ['Open', 'Medium', 'Firm'], baseline: 'Open', type: 'lever', func: 'modeLever' }
       }
     },
     'Fox Float GENIE': {
@@ -377,9 +377,9 @@ export const suspensionDatabase: SuspensionDB = {
       spring: 'FLOAT',
       capabilities: { lsc: false, hsc: false, lsr: true, hsr: false },
       adjustments: {
-        'Air Pressure': { location: 'Air valve on main body.', tool: 'Fox shock pump', range: '100-350 PSI' },
-        'Low-Speed Rebound': { location: 'Red knob on eyelet.', setting: 'clicks from closed', range: '12 clicks', baseline: 6, type: 'knob' },
-        'Compression Mode': { location: 'Blue lever.', setting: 'Position', range: '2 positions', positions: ['Open', 'Climb'], baseline: 'Open', type: 'lever' }
+        'Air Pressure': { location: 'Air valve on main body.', tool: 'Fox shock pump', range: '100-350 PSI', func: 'airSpring' },
+        'Low-Speed Rebound': { location: 'Red knob on eyelet.', setting: 'clicks from closed', range: '12 clicks', baseline: 6, type: 'knob', func: 'lsr' },
+        'Compression Mode': { location: 'Blue lever.', setting: 'Position', range: '2 positions', positions: ['Open', 'Climb'], baseline: 'Open', type: 'lever', func: 'modeLever' }
       }
     },
     'RockShox Super Deluxe Ultimate 2-Pos': {
@@ -389,10 +389,10 @@ export const suspensionDatabase: SuspensionDB = {
       spring: 'DebonAir+ with volume spacers',
       capabilities: { lsc: true, hsc: false, lsr: true, hsr: false },
       adjustments: {
-        'Air Pressure': { location: 'Air valve on can.', tool: 'RockShox pump', range: '100-350 PSI' },
-        'Low-Speed Rebound': { location: 'Red knob on eyelet.', setting: 'clicks from closed', range: '15 clicks', baseline: 8, type: 'knob' },
-        'Low-Speed Compression': { location: 'Small dial on piggyback.', setting: 'clicks from closed', range: '5 clicks', baseline: 2, type: 'knob' },
-        'Compression Mode': { location: 'Blue lever.', setting: 'Position', range: '2 positions', positions: ['Open', 'Threshold'], baseline: 'Open', type: 'lever' }
+        'Air Pressure': { location: 'Air valve on can.', tool: 'RockShox pump', range: '100-350 PSI', func: 'airSpring' },
+        'Low-Speed Rebound': { location: 'Red knob on eyelet.', setting: 'clicks from closed', range: '15 clicks', baseline: 8, type: 'knob', func: 'lsr' },
+        'Low-Speed Compression': { location: 'Small dial on piggyback.', setting: 'clicks from closed', range: '5 clicks', baseline: 2, type: 'knob', func: 'lsc' },
+        'Compression Mode': { location: 'Blue lever.', setting: 'Position', range: '2 positions', positions: ['Open', 'Threshold'], baseline: 'Open', type: 'lever', func: 'modeLever' }
       }
     },
     'RockShox Super Deluxe Ultimate+ LSC Knob': {
@@ -402,10 +402,10 @@ export const suspensionDatabase: SuspensionDB = {
       spring: 'DebonAir+ with volume spacers',
       capabilities: { lsc: true, hsc: true, lsr: true, hsr: false },
       adjustments: {
-        'Air Pressure': { location: 'Air valve on can.', tool: 'RockShox pump', range: '100-350 PSI' },
-        'Low-Speed Rebound': { location: 'Red knob on eyelet.', setting: 'clicks from closed', range: '15 clicks', baseline: 8, type: 'knob' },
-        'Low-Speed Compression': { location: 'Small dial on reservoir.', setting: 'clicks from closed', range: '5 clicks', baseline: 3, type: 'knob' },
-        'High-Speed Compression': { location: 'Large dial on reservoir.', setting: 'clicks from closed', range: '5 clicks', baseline: 2, type: 'knob' }
+        'Air Pressure': { location: 'Air valve on can.', tool: 'RockShox pump', range: '100-350 PSI', func: 'airSpring' },
+        'Low-Speed Rebound': { location: 'Red knob on eyelet.', setting: 'clicks from closed', range: '15 clicks', baseline: 8, type: 'knob', func: 'lsr' },
+        'Low-Speed Compression': { location: 'Small dial on reservoir.', setting: 'clicks from closed', range: '5 clicks', baseline: 3, type: 'knob', func: 'lsc' },
+        'High-Speed Compression': { location: 'Large dial on reservoir.', setting: 'clicks from closed', range: '5 clicks', baseline: 2, type: 'knob', func: 'hsc' }
       }
     },
     'RockShox Super Deluxe Ultimate Coil': {
@@ -415,10 +415,10 @@ export const suspensionDatabase: SuspensionDB = {
       spring: 'Coil (requires correct spring rate)',
       capabilities: { lsc: true, hsc: true, lsr: true, hsr: false },
       adjustments: {
-        'Spring Preload': { location: 'Preload collar.', tool: 'Hand', range: 'Variable', type: 'knob' },
-        'Low-Speed Rebound': { location: 'Red knob on eyelet.', setting: 'clicks from closed', range: '15 clicks', baseline: 8, type: 'knob' },
-        'Low-Speed Compression': { location: 'Small dial on reservoir.', setting: 'clicks from closed', range: '5 clicks', baseline: 3, type: 'knob' },
-        'High-Speed Compression': { location: 'Large dial on reservoir.', setting: 'clicks from closed', range: '5 clicks', baseline: 2, type: 'knob' }
+        'Spring Preload': { location: 'Preload collar.', tool: 'Hand', range: 'Variable', type: 'knob', func: 'preload' },
+        'Low-Speed Rebound': { location: 'Red knob on eyelet.', setting: 'clicks from closed', range: '15 clicks', baseline: 8, type: 'knob', func: 'lsr' },
+        'Low-Speed Compression': { location: 'Small dial on reservoir.', setting: 'clicks from closed', range: '5 clicks', baseline: 3, type: 'knob', func: 'lsc' },
+        'High-Speed Compression': { location: 'Large dial on reservoir.', setting: 'clicks from closed', range: '5 clicks', baseline: 2, type: 'knob', func: 'hsc' }
       }
     },
     'Öhlins TTX Air': {
@@ -428,10 +428,10 @@ export const suspensionDatabase: SuspensionDB = {
       spring: 'TTX Air (unique design)',
       capabilities: { lsc: true, hsc: true, lsr: true, hsr: false },
       adjustments: {
-        'Air Pressure': { location: 'Valve on can.', tool: 'Shock pump', range: '100-350 PSI' },
-        'Low-Speed Rebound': { location: 'Gold knob near eyelet.', setting: 'clicks from closed', range: '20 clicks', baseline: 10, type: 'knob' },
-        'Low-Speed Compression': { location: 'Blue knob on reservoir.', setting: 'clicks from closed', range: '16 clicks', baseline: 8, type: 'knob' },
-        'High-Speed Compression': { location: 'Black lever on reservoir.', setting: 'Position', range: '3 positions', positions: ['Open', 'Pedal', 'Lock'], type: 'lever' }
+        'Air Pressure': { location: 'Valve on can.', tool: 'Shock pump', range: '100-350 PSI', func: 'airSpring' },
+        'Low-Speed Rebound': { location: 'Gold knob near eyelet.', setting: 'clicks from closed', range: '20 clicks', baseline: 10, type: 'knob', func: 'lsr' },
+        'Low-Speed Compression': { location: 'Blue knob on reservoir.', setting: 'clicks from closed', range: '16 clicks', baseline: 8, type: 'knob', func: 'lsc' },
+        'High-Speed Compression': { location: 'Black lever on reservoir.', setting: 'Position', range: '3 positions', positions: ['Open', 'Pedal', 'Lock'], type: 'lever', func: 'modeLever' }
       }
     },
     'Öhlins TTX22m': {
@@ -441,10 +441,10 @@ export const suspensionDatabase: SuspensionDB = {
       spring: 'Coil (requires correct spring rate)',
       capabilities: { lsc: true, hsc: true, lsr: true, hsr: false },
       adjustments: {
-        'Spring Preload': { location: 'Preload collar.', tool: 'Spanner wrench', range: 'Variable', type: 'knob' },
-        'Low-Speed Rebound': { location: 'Gold knob near eyelet.', setting: 'clicks from closed', range: '20 clicks', baseline: 10, type: 'knob' },
-        'Low-Speed Compression': { location: 'Blue knob on reservoir.', setting: 'clicks from closed', range: '16 clicks', baseline: 8, type: 'knob' },
-        'High-Speed Compression': { location: 'Black lever/knob on reservoir.', setting: 'clicks from closed', range: '3 clicks', baseline: 1, type: 'knob' }
+        'Spring Preload': { location: 'Preload collar.', tool: 'Spanner wrench', range: 'Variable', type: 'knob', func: 'preload' },
+        'Low-Speed Rebound': { location: 'Gold knob near eyelet.', setting: 'clicks from closed', range: '20 clicks', baseline: 10, type: 'knob', func: 'lsr' },
+        'Low-Speed Compression': { location: 'Blue knob on reservoir.', setting: 'clicks from closed', range: '16 clicks', baseline: 8, type: 'knob', func: 'lsc' },
+        'High-Speed Compression': { location: 'Black lever/knob on reservoir.', setting: 'clicks from closed', range: '3 clicks', baseline: 1, type: 'knob', func: 'hsc' }
       }
     }
   }

@@ -7,6 +7,19 @@ export interface Adjustment {
   baseline?: number | string;
   type?: 'knob' | 'lever' | 'spacer';
   positions?: string[];
+
+  // The tuning engine MUST branch on `func`, never on whether the display key
+  // string contains "Compression"/"Rebound". Fox names its FIT4/DPX2 low-speed
+  // compression dial "Open Mode Adjust", which the old string-match never
+  // recognised as compression. `func` decouples the marketing name (kept in the
+  // key / `location`) from the tuning function.
+  //   lsc/hsc/lsr/hsr — low/high-speed compression/rebound damping knobs
+  //   airSpring       — main air pressure
+  //   rampUp          — secondary ramp-up air chamber
+  //   preload         — coil spring preload
+  //   modeLever       — climb / mode lever (Open/Medium/Firm etc.)
+  func?: 'lsc' | 'hsc' | 'lsr' | 'hsr'
+       | 'airSpring' | 'rampUp' | 'preload' | 'modeLever';
 }
 
 export interface SuspensionComponent {

@@ -65,9 +65,12 @@ export const ResultsView: React.FC<Props> = ({
   const textSecondary = isDarkMode ? 'text-zinc-400' : 'text-gray-500';
 
   const renderAdjustmentCard = (key: string, value: string | number, spec: any) => {
-    const isRebound = key.includes('Rebound');
-    const isCompression = key.includes('Compression');
-    const isAir = key.includes('Air') || key.includes('Spring');
+    // Style by tuning function first (so "Open Mode Adjust" — a low-speed
+    // compression dial — is coloured as compression), falling back to the
+    // display name. Never rename the label itself; it must match the fork.
+    const isRebound = spec?.func === 'lsr' || spec?.func === 'hsr' || key.includes('Rebound');
+    const isCompression = spec?.func === 'lsc' || spec?.func === 'hsc' || key.includes('Compression');
+    const isAir = spec?.func === 'airSpring' || spec?.func === 'rampUp' || key.includes('Air') || key.includes('Spring');
 
     let accentColor = isDarkMode ? 'text-zinc-300' : 'text-zinc-700';
     let labelColor = isDarkMode ? 'bg-zinc-800' : 'bg-gray-100';
