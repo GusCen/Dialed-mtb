@@ -241,7 +241,7 @@ export default function App() {
         <div className="container mx-auto px-5 h-16 flex items-center justify-between max-w-7xl">
           <div className="flex items-center gap-2 cursor-pointer active:opacity-70 transition-opacity" onClick={() => setView('input')}>
             <Mountain className="w-6 h-6 text-orange-500" strokeWidth={2.5} />
-            <span className="text-xl font-bold font-orbitron tracking-tight">Dialed</span>
+            <span className="text-xl font-bold font-display tracking-tight">Dialed</span>
           </div>
           <div className="flex items-center gap-4">
             <button onClick={toggleTheme} className="text-sm font-medium transition-colors cursor-pointer select-none hidden sm:block">
